@@ -8,6 +8,12 @@
 import UIKit
 
 class LoginViewController: UIViewController {
+    
+    @IBAction func unwindToRootViewController(segue: UIStoryboardSegue) {
+        
+    }
+    let activityIndicator = Loader()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +76,7 @@ class LoginViewController: UIViewController {
         return button
         
     }()
+    
 
     //MARK: - setupController
     private func setupViews() {
@@ -101,9 +108,13 @@ class LoginViewController: UIViewController {
     }
     //MARK: - check login+password
     private func checkLogin() -> Bool {
+        activityIndicator.showLoader()
         if loginInput.text == "1" && passwordInput.text == "1" {
+            activityIndicator.hideLoader()
             return true
-        } else { return false }
+        } else {
+            activityIndicator.hideLoader()
+            return false }
     }
     private func showAlert() {
         let alert = UIAlertController(title: "Ошибка", message: "Введены неверные данные", preferredStyle: .alert)
