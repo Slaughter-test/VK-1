@@ -58,8 +58,12 @@ class FriendsTableViewController: UITableViewController {
         }
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "showPhotos", sender: self)
+        let vc = storyboard?.instantiateViewController(identifier: "PhotoCollectionViewController1") as! PhotoCollectionViewController
+        vc.photos = friends[indexPath.row].photos!
+        self.navigationController?.pushViewController(vc, animated: true)
+        
     }
+    
     
     
     
@@ -78,6 +82,22 @@ class FriendsTableViewController: UITableViewController {
         let fr7 = Friend()
         let fr8 = Friend()
         let fr9 = Friend()
+        let ph1 = Photo()
+        let ph2 = Photo()
+        let ph3 = Photo()
+        let ph4 = Photo()
+        ph1.image = UIImage(named: "kitana")
+        ph2.image = UIImage(named: "2")
+        ph3.image = UIImage(named: "3")
+        ph4.image = UIImage(named: "freddie")
+        ph1.isliked = true
+        ph2.isliked = false
+        ph3.isliked = true
+        ph4.isliked = false
+        ph1.likesCount = 1
+        ph2.likesCount = 3
+        ph3.likesCount = 123
+        ph4.likesCount = 5435
         fr1.firstName = "John"
         fr1.lastName = "Kramer"
         fr2.firstName = "Clown"
@@ -96,7 +116,15 @@ class FriendsTableViewController: UITableViewController {
         fr8.lastName = "Thorn"
         fr9.firstName = "Parker"
         fr9.lastName = "Kreyn"
-        fr1.photos = [UIImage](arrayLiteral: UIImage(named: "1")!, UIImage(named: "2")!, UIImage(named: "3")!, UIImage(named: "4")!, UIImage(named: "5")!)
+        fr1.photos = [ph1, ph2, ph3, ph4]
+        fr2.photos = [ph1, ph2, ph3, ph4]
+        fr3.photos = [ph1, ph2, ph3, ph4]
+        fr4.photos = [ph1, ph2, ph3, ph4]
+        fr5.photos = [ph1, ph2, ph3, ph4]
+        fr6.photos = [ph1, ph2, ph3, ph4]
+        fr7.photos = [ph1, ph2, ph3, ph4]
+        fr8.photos = [ph1, ph2, ph3, ph4]
+        fr9.photos = [ph1, ph2, ph3, ph4]
         fr1.photo = UIImage(named: "kramer")
         fr2.photo = UIImage(named: "pennywise")
         fr3.photo = UIImage(named: "freddie")
@@ -143,7 +171,6 @@ class FriendsTableViewController: UITableViewController {
                 sortedFriends.append(i)
             }
         }
-        print(sortedFriends.count)
     }
     
     @objc func addFriend() {

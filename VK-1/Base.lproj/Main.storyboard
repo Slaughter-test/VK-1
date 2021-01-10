@@ -2,8 +2,10 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Nzl-dP-xJl">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -91,7 +93,7 @@
                     <navigationItem key="navigationItem" title="Root View Controller" id="tzq-Fl-SSQ"/>
                     <connections>
                         <segue destination="Zyk-CG-WiM" kind="show" identifier="addGroup" id="WAW-Yi-f22"/>
-                        <segue destination="S1c-uN-D6T" kind="show" identifier="showPhotos" id="rSU-yP-Zhr"/>
+                        <segue destination="pCl-7M-zDl" kind="show" identifier="showPhotoList" id="cqe-bX-mKW"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PL2-R9-jTp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -144,24 +146,60 @@
             </objects>
             <point key="canvasLocation" x="1058" y="796"/>
         </scene>
-        <!--Photo View Controller-->
-        <scene sceneID="ayo-Jy-tFa">
+        <!--Photo Collection View Controller-->
+        <scene sceneID="FZL-xY-5wt">
             <objects>
-                <viewController storyboardIdentifier="PhotoViewController" id="JVO-go-U3Y" customClass="PhotoViewController" customModule="VK_1" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="OBm-vr-Pct"/>
-                        <viewControllerLayoutGuide type="bottom" id="Pgg-sZ-dOt"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="6KI-mt-KH5">
+                <collectionViewController storyboardIdentifier="PhotoCollectionViewController1" id="AVM-o5-c7q" customClass="PhotoCollectionViewController" customModule="VK_1" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="3Qc-Np-iZp">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="jTV-Ou-kx9"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Obg-bb-qay" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eaF-PV-Xa7">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="AVM-o5-c7q" id="vm1-Sp-fsY"/>
+                            <outlet property="delegate" destination="AVM-o5-c7q" id="kpM-d0-arh"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="lM1-rO-feV"/>
+                    <connections>
+                        <segue destination="G3v-TV-yHe" kind="show" identifier="openFullPhoto" id="4YY-Ae-jhW"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bGu-5W-FpD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2703" y="-1373"/>
+            <point key="canvasLocation" x="2698" y="-1635"/>
+        </scene>
+        <!--Photo View Controller-->
+        <scene sceneID="Oh0-gq-cb9">
+            <objects>
+                <collectionViewController storyboardIdentifier="PhotoViewController1" id="G3v-TV-yHe" customClass="PhotoViewController" customModule="VK_1" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" contentInsetAdjustmentBehavior="never" dataMode="prototypes" id="ZVJ-eT-F7K">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="1" minimumInteritemSpacing="1" sectionInsetReference="safeArea" id="gbX-IZ-tDJ">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="G3v-TV-yHe" id="MTs-gb-TiN"/>
+                            <outlet property="delegate" destination="G3v-TV-yHe" id="duh-3U-4ho"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="zCq-XM-qAO"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GFC-x5-la8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3615" y="-1643"/>
         </scene>
         <!--Friends-->
         <scene sceneID="Syg-y4-ZbX">
@@ -196,7 +234,7 @@
                     <navigationItem key="navigationItem" id="ixh-qE-VEQ"/>
                     <connections>
                         <segue destination="ksa-N1-tJs" kind="show" identifier="addFriend" id="lDa-D5-Wrq"/>
-                        <segue destination="JVO-go-U3Y" kind="show" identifier="showPhotos" id="hLt-kX-GhE"/>
+                        <segue destination="AVM-o5-c7q" kind="show" identifier="showPhotoList" id="GeP-uQ-Voh"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0IT-az-KWI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -280,26 +318,48 @@
             </objects>
             <point key="canvasLocation" x="1851" y="76"/>
         </scene>
-        <!--Photo View Controller-->
-        <scene sceneID="MT3-My-v5g">
+        <!--Photo Collection View Controller-->
+        <scene sceneID="cC1-ji-J0v">
             <objects>
-                <viewController id="S1c-uN-D6T" customClass="PhotoViewController" customModule="VK_1" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="p37-56-2bI"/>
-                        <viewControllerLayoutGuide type="bottom" id="uC5-LM-3ro"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="kTk-Oh-q6m">
+                <collectionViewController storyboardIdentifier="PhotoCollectionViewController2" id="pCl-7M-zDl" customClass="PhotoCollectionViewController" customModule="VK_1" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="H8N-yo-6cR">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="APP-Bv-w2V"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hSb-ZM-Xyb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="zNr-cZ-4Ax">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="YLo-pP-Vo2">
+                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Wqo-7J-4Pp">
+                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionViewCellContentView>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="pCl-7M-zDl" id="KSp-18-m13"/>
+                            <outlet property="delegate" destination="pCl-7M-zDl" id="bT4-1p-jYX"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="lt6-ci-Gvj"/>
+                    <connections>
+                        <segue destination="G3v-TV-yHe" kind="show" id="GeP-38-HFY"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="evV-54-lJW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1951" y="1517"/>
+            <point key="canvasLocation" x="1989" y="1569"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="GeP-38-HFY"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="figure.wave.circle" catalog="system" width="128" height="121"/>
         <image name="figure.wave.circle.fill" catalog="system" width="128" height="121"/>

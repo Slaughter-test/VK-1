@@ -13,6 +13,10 @@
 		791F65CC259E177500ECD136 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 791F65CA259E177500ECD136 /* Main.storyboard */; };
 		791F65CE259E177800ECD136 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 791F65CD259E177800ECD136 /* Assets.xcassets */; };
 		791F65D1259E177800ECD136 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 791F65CF259E177800ECD136 /* LaunchScreen.storyboard */; };
+		79304C5F25A9F25000E58CB4 /* PhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79304C5E25A9F25000E58CB4 /* PhotoCollectionViewController.swift */; };
+		79304C6225A9F28800E58CB4 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79304C6125A9F28800E58CB4 /* PhotoCollectionViewCell.swift */; };
+		79304C6525AA35EE00E58CB4 /* FullPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79304C6425AA35EE00E58CB4 /* FullPhotoCollectionViewCell.swift */; };
+		79304C6825AA3DC400E58CB4 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79304C6725AA3DC400E58CB4 /* Photo.swift */; };
 		7956FF1E25A5C55D008274F4 /* GroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7956FF1D25A5C55D008274F4 /* GroupsTableViewController.swift */; };
 		7956FF2125A5C56C008274F4 /* NewGroupTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7956FF2025A5C56C008274F4 /* NewGroupTableViewController.swift */; };
 		7956FF2425A5C589008274F4 /* GroupsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7956FF2325A5C589008274F4 /* GroupsTableViewCell.swift */; };
@@ -42,6 +46,10 @@
 		791F65CD259E177800ECD136 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		791F65D0259E177800ECD136 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		791F65D2259E177800ECD136 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		79304C5E25A9F25000E58CB4 /* PhotoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewController.swift; sourceTree = "<group>"; };
+		79304C6125A9F28800E58CB4 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		79304C6425AA35EE00E58CB4 /* FullPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		79304C6725AA3DC400E58CB4 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		7956FF1D25A5C55D008274F4 /* GroupsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsTableViewController.swift; sourceTree = "<group>"; };
 		7956FF2025A5C56C008274F4 /* NewGroupTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupTableViewController.swift; sourceTree = "<group>"; };
 		7956FF2325A5C589008274F4 /* GroupsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsTableViewCell.swift; sourceTree = "<group>"; };
@@ -141,6 +149,8 @@
 			isa = PBXGroup;
 			children = (
 				79ACECB1259F41FE0024F414 /* FeedCollectionViewController.swift */,
+				79304C5E25A9F25000E58CB4 /* PhotoCollectionViewController.swift */,
+				7956FF2925A5D7CA008274F4 /* PhotoViewController.swift */,
 			);
 			path = CollectionViewControllers;
 			sourceTree = "<group>";
@@ -152,7 +162,6 @@
 				7956FF3925A63174008274F4 /* TableViewControllers */,
 				7956FF3825A63165008274F4 /* NavigationControllers */,
 				791F65C8259E177500ECD136 /* LoginViewController.swift */,
-				7956FF2925A5D7CA008274F4 /* PhotoViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -163,6 +172,8 @@
 				79ACECB4259F43570024F414 /* FeedCollectionViewCell.swift */,
 				79ACECBD25A0C59A0024F414 /* FriendsTableViewCell.swift */,
 				7956FF2325A5C589008274F4 /* GroupsTableViewCell.swift */,
+				79304C6125A9F28800E58CB4 /* PhotoCollectionViewCell.swift */,
+				79304C6425AA35EE00E58CB4 /* FullPhotoCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -173,6 +184,7 @@
 				79ACECA6259F39F40024F414 /* Post.swift */,
 				79ACECBA25A0B5070024F414 /* Friend.swift */,
 				7956FF2625A5C65E008274F4 /* Group.swift */,
+				79304C6725AA3DC400E58CB4 /* Photo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -263,7 +275,10 @@
 				7956FF2425A5C589008274F4 /* GroupsTableViewCell.swift in Sources */,
 				7956FF2125A5C56C008274F4 /* NewGroupTableViewController.swift in Sources */,
 				79ACECB5259F43570024F414 /* FeedCollectionViewCell.swift in Sources */,
+				79304C6525AA35EE00E58CB4 /* FullPhotoCollectionViewCell.swift in Sources */,
+				79304C6825AA3DC400E58CB4 /* Photo.swift in Sources */,
 				791F65C9259E177500ECD136 /* LoginViewController.swift in Sources */,
+				79304C6225A9F28800E58CB4 /* PhotoCollectionViewCell.swift in Sources */,
 				7956FF1E25A5C55D008274F4 /* GroupsTableViewController.swift in Sources */,
 				7956FF3C25A631B5008274F4 /* VKViewController.swift in Sources */,
 				7956FF4425A63558008274F4 /* VKPushAnimator.swift in Sources */,
@@ -274,6 +289,7 @@
 				7956FF2A25A5D7CA008274F4 /* PhotoViewController.swift in Sources */,
 				7956FF3325A62D81008274F4 /* VKSegue.swift in Sources */,
 				7956FF4025A63363008274F4 /* VKTransition.swift in Sources */,
+				79304C5F25A9F25000E58CB4 /* PhotoCollectionViewController.swift in Sources */,
 				791F65C7259E177500ECD136 /* SceneDelegate.swift in Sources */,
 				79ACECBB25A0B5070024F414 /* Friend.swift in Sources */,
 			);
@@ -425,6 +441,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 72QPQ3P58F;
 				INFOPLIST_FILE = "VK-1/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -444,6 +461,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 72QPQ3P58F;
 				INFOPLIST_FILE = "VK-1/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

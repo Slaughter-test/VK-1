@@ -7,7 +7,8 @@
 
 import UIKit
 
-class Group {
+class Group: NSObject {
     var title: String?
     var photo: UIImage?
+    var photos: [Photo]?
 }
