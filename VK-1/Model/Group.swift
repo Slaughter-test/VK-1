@@ -5,4 +5,9 @@
 //  Created by Юрий Егоров on 06.01.2021.
 //
 
-import Foundation
+import UIKit
+
+class Group {
+    var title: String?
+    var photo: UIImage?
+}

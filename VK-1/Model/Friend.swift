@@ -5,4 +5,11 @@
 //  Created by Юрий Егоров on 02.01.2021.
 //
 
-import Foundation
+import UIKit
+
+class Friend {
+    var firstName: String?
+    var lastName: String?
+    var photo: UIImage?
+    var photos: [UIImage]?
+}
