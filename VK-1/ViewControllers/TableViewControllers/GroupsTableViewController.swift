@@ -59,7 +59,9 @@ class GroupsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "showPhotos", sender: self)
+        let vc = storyboard?.instantiateViewController(identifier: "PhotoCollectionViewController2") as! PhotoCollectionViewController
+        vc.photos = groups[indexPath.row].photos!
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     
@@ -87,6 +89,22 @@ class GroupsTableViewController: UITableViewController {
         fr7.title = "Salazar"
         fr8.title = "Thorn"
         fr9.title = "Kreyn"
+        let ph1 = Photo()
+        let ph2 = Photo()
+        let ph3 = Photo()
+        let ph4 = Photo()
+        ph1.image = UIImage(named: "kitana")
+        ph2.image = UIImage(named: "2")
+        ph3.image = UIImage(named: "3")
+        ph4.image = UIImage(named: "freddie")
+        ph1.isliked = true
+        ph2.isliked = false
+        ph3.isliked = true
+        ph4.isliked = false
+        ph1.likesCount = 1
+        ph2.likesCount = 3
+        ph3.likesCount = 123
+        ph4.likesCount = 5435
         fr1.photo = UIImage(named: "kramer")
         fr2.photo = UIImage(named: "pennywise")
         fr3.photo = UIImage(named: "freddie")
@@ -96,7 +114,16 @@ class GroupsTableViewController: UITableViewController {
         fr7.photo = UIImage(named: "hannibal")
         fr8.photo = UIImage(named: "damien")
         fr9.photo = UIImage(named: "parker")
-        
+        fr1.photos = [ph1, ph2, ph3, ph4]
+        fr2.photos = [ph1, ph2, ph3, ph4]
+        fr3.photos = [ph1, ph2, ph3, ph4]
+        fr4.photos = [ph1, ph2, ph3, ph4]
+        fr5.photos = [ph1, ph2, ph3, ph4]
+        fr6.photos = [ph1, ph2, ph3, ph4]
+        fr7.photos = [ph1, ph2, ph3, ph4]
+        fr8.photos = [ph1, ph2, ph3, ph4]
+        fr9.photos = [ph1, ph2, ph3, ph4]
+
         return [fr1, fr2, fr3, fr4, fr5, fr6, fr7, fr8, fr9].sorted {$0.title! < $1.title!}
         
     }()

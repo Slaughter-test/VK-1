@@ -7,9 +7,9 @@
 
 import UIKit
 
-class Friend {
+class Friend: NSObject {
     var firstName: String?
     var lastName: String?
     var photo: UIImage?
-    var photos: [UIImage]?
+    var photos: [Photo]?
 }
