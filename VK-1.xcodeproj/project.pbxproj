@@ -27,6 +27,7 @@
 		7956FF3C25A631B5008274F4 /* VKViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7956FF3B25A631B5008274F4 /* VKViewController.swift */; };
 		7956FF4025A63363008274F4 /* VKTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7956FF3F25A63363008274F4 /* VKTransition.swift */; };
 		7956FF4425A63558008274F4 /* VKPushAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7956FF4325A63558008274F4 /* VKPushAnimator.swift */; };
+		7965EA1325ACC239004BFB16 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7965EA1225ACC239004BFB16 /* Session.swift */; };
 		79ACECA7259F39F40024F414 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79ACECA6259F39F40024F414 /* Post.swift */; };
 		79ACECB2259F41FE0024F414 /* FeedCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79ACECB1259F41FE0024F414 /* FeedCollectionViewController.swift */; };
 		79ACECB5259F43570024F414 /* FeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79ACECB4259F43570024F414 /* FeedCollectionViewCell.swift */; };
@@ -60,6 +61,7 @@
 		7956FF3B25A631B5008274F4 /* VKViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKViewController.swift; sourceTree = "<group>"; };
 		7956FF3F25A63363008274F4 /* VKTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKTransition.swift; sourceTree = "<group>"; };
 		7956FF4325A63558008274F4 /* VKPushAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKPushAnimator.swift; sourceTree = "<group>"; };
+		7965EA1225ACC239004BFB16 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		79ACECA6259F39F40024F414 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		79ACECB1259F41FE0024F414 /* FeedCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewController.swift; sourceTree = "<group>"; };
 		79ACECB4259F43570024F414 /* FeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 				79ACECBA25A0B5070024F414 /* Friend.swift */,
 				7956FF2625A5C65E008274F4 /* Group.swift */,
 				79304C6725AA3DC400E58CB4 /* Photo.swift */,
+				7965EA1225ACC239004BFB16 /* Session.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 				79ACECB825A0B4C00024F414 /* FriendsTableViewController.swift in Sources */,
 				79ACECCC25A38B510024F414 /* Loader.swift in Sources */,
 				7956FF2A25A5D7CA008274F4 /* PhotoViewController.swift in Sources */,
+				7965EA1325ACC239004BFB16 /* Session.swift in Sources */,
 				7956FF3325A62D81008274F4 /* VKSegue.swift in Sources */,
 				7956FF4025A63363008274F4 /* VKTransition.swift in Sources */,
 				79304C5F25A9F25000E58CB4 /* PhotoCollectionViewController.swift in Sources */,
