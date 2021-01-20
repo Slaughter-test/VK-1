@@ -11,12 +11,19 @@ private let reuseIdentifier = "Cell"
 
 class PhotoCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    var photos: [Photo] = []
+    let networkService = NetworkService()
+    var id: Int = 0
+    var photos = Array<Photo>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.collectionView!.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        networkService.loadPhotosList(id, completion: { [weak self] photos in
+            self?.photos = photos
+            self?.collectionView.reloadData()
+
+        })
         setupViews()
     }
 
@@ -28,10 +35,7 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PhotoCollectionViewCell
-        cell.photoImageView.image = photos[indexPath.row].image
-        cell.likesCount = photos[indexPath.row].likesCount!
-        cell.like = photos[indexPath.row].isliked
-        cell.updateStateOfLikeButton()
+        cell.photo = photos[indexPath.row]
         return cell
     }
     
@@ -51,6 +55,7 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
         let vc = storyboard?.instantiateViewController(identifier: "PhotoViewController1") as! PhotoViewController
         vc.photos = photos
         vc.indexPath = indexPath
+        vc.userId = id
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

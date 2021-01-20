@@ -6,9 +6,19 @@
 //
 
 import UIKit
+import SwiftyJSON
 
-class Group: NSObject {
-    var title: String?
-    var photo: UIImage?
-    var photos: [Photo]?
+struct Group: Codable {
+    let name: String
+    let photo: String
+    let id: Int
+    
+    
+     init(_ json: JSON)  {
+        
+        self.name = json["name"].stringValue
+        self.photo = json["photo_100"].stringValue
+        self.id = -(json["id"].intValue)
+    }
+
 }

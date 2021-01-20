@@ -15,8 +15,7 @@ class FeedCollectionViewController: UICollectionViewController, UICollectionView
         super.viewDidLoad()
 
         self.collectionView!.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: "feedCell")
-        self.collectionView?.backgroundColor = UIColor(white: 0.90, alpha: 1)
-        
+        self.collectionView?.backgroundColor = UIColor(white: 0.90, alpha: 1) 
         setupViews()
 
     }

@@ -12,6 +12,10 @@ class VKWebViewController: UIViewController {
     
     let networkService = NetworkService()
     
+    @IBAction func unwindToRootViewController(segue: UIStoryboardSegue) {
+        
+    }
+    
     @IBOutlet weak var webview: WKWebView! {
             didSet{
                 webview.navigationDelegate = self
@@ -28,7 +32,7 @@ class VKWebViewController: UIViewController {
                     URLQueryItem(name: "client_id", value: "7728615"),
                     URLQueryItem(name: "display", value: "mobile"),
                     URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
-                    URLQueryItem(name: "scope", value: "262150"),
+                    URLQueryItem(name: "scope", value: "manage,photos,docs,wall,groups"),
                     URLQueryItem(name: "response_type", value: "token"),
                     URLQueryItem(name: "v", value: "5.68")
                 ]
@@ -36,9 +40,8 @@ class VKWebViewController: UIViewController {
                 let request = URLRequest(url: urlComponents.url!)
                 
                 webview.load(request)
-        print("asfa")
-        
     }
+    
     
 
 
@@ -68,10 +71,7 @@ extension VKWebViewController: WKNavigationDelegate {
         // Выводим все что запросили в консоль
         print(Session.instance.token)
         print(Session.instance.userId)
-        networkService.loadFriendList()
-        networkService.loadPhotosList()
-        networkService.getGroupsList()
-        networkService.searchGroupsFromList("asd")
         decisionHandler(.cancel)
+        performSegue(withIdentifier: "accessLogin", sender: self)
     }
 }
