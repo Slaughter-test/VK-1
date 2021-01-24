@@ -18,3 +18,4 @@ class Post: NSObject {
     var likes: Int?
     var comments: Int?
 }
+

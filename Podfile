@@ -6,6 +6,7 @@ target 'VK-1' do
   use_frameworks!
 
   pod 'Alamofire', '~> 5.2'
+  pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
 
   # Pods for VK-1
 

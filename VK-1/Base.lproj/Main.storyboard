@@ -53,9 +53,11 @@
                     <connections>
                         <outlet property="webview" destination="KGd-bV-ivE" id="Uct-w5-Ka7"/>
                         <segue destination="mzn-Dt-q9M" kind="show" identifier="accessLogin" customClass="VKSegue" customModule="VK_1" customModuleProvider="target" id="rcH-EG-Sse"/>
+                        <segue destination="S2B-kA-xB5" kind="unwind" unwindAction="unwindToRootViewControllerWithSegue:" id="cGR-Jh-oBk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <exit id="S2B-kA-xB5" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="75.669642857142847"/>
         </scene>

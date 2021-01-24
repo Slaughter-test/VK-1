@@ -45,7 +45,8 @@ class FriendsTableViewCell: UITableViewCell {
     var friend: Friend? {
         didSet {
             nameLabel.text = (friend?.firstName)! + " " + (friend?.lastName)!
-            photo.image = friend?.photo
+            photo.downloaded(from: friend!.photo)
+
         }
     }
     

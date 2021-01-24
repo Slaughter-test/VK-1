@@ -42,38 +42,7 @@ class NewGroupTableViewController: UITableViewController {
     }
 
     //MARK: - Data
-    var groups: Array<Group> = {
-        let fr1 = Group()
-        let fr2 = Group()
-        let fr3 = Group()
-        let fr4 = Group()
-        let fr5 = Group()
-        let fr6 = Group()
-        let fr7 = Group()
-        let fr8 = Group()
-        let fr9 = Group()
-        fr1.title = "John"
-        fr2.title = "Clown"
-        fr3.title = "Freddie"
-        fr4.title = "Samara"
-        fr5.title = "Alessa"
-        fr6.title = "Michael"
-        fr7.title = "Dr."
-        fr8.title = "Damien"
-        fr9.title = "Parker"
-        fr1.photo = UIImage(named: "kramer")
-        fr2.photo = UIImage(named: "pennywise")
-        fr3.photo = UIImage(named: "freddie")
-        fr4.photo = UIImage(named: "samara")
-        fr5.photo = UIImage(named: "alessa")
-        fr6.photo = UIImage(named: "maikl")
-        fr7.photo = UIImage(named: "hannibal")
-        fr8.photo = UIImage(named: "damien")
-        fr9.photo = UIImage(named: "parker")
-        
-        return [fr1, fr2, fr3, fr4, fr5, fr6, fr7, fr8, fr9].sorted {$0.title! < $1.title!}
-        
-    }()
+    var groups: Array<Group> = []
     
     private func setupViews() {
 

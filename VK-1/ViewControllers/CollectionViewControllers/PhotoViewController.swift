@@ -10,7 +10,7 @@ import UIKit
 class PhotoViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var flag: Bool?
-    
+    var userId: Int?
     var photos:[Photo] = []
     var indexPath:IndexPath!
 
@@ -35,10 +35,9 @@ class PhotoViewController: UICollectionViewController, UICollectionViewDelegateF
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! FullPhotoCollectionViewCell
-        cell.photoImageView.image = photos[indexPath.row].image
-        cell.isLiked = photos[indexPath.row].isliked
-        print(indexPath)
-        
+        cell.photo = photos[indexPath.row]
+        cell.userId = userId
+        cell.updateLike()
         return cell
     }
     
