@@ -7,6 +7,8 @@ target 'VK-1' do
 
   pod 'Alamofire', '~> 5.2'
   pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+  pod 'Kingfisher', '~> 6.0.1'
+  pod 'RealmSwift'
 
   # Pods for VK-1
 
