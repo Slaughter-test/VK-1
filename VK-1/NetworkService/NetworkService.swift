@@ -68,6 +68,110 @@ class NetworkService {
             }
     }
         }
+    func loadSuggestedFriends(completion: @escaping ([Friend]) -> Void) {
+        let path = "friends.getSuggestions"
+        let url = baseUrl+path
+        let parameters: Parameters = [
+            "user_id": Session.instance.userId,
+            "access_token": Session.instance.token,
+            "v": version,
+            "fields": "city, domain, photo",
+            "order": "name"
+        ]
+
+        
+        AF.request(url, method: .get, parameters: parameters).responseData { [weak self]
+            response in
+            switch response.result {
+            case .success(let data):
+                let json = JSON(data)
+                var friends = [Friend]()
+                let friendsJSON = json["response"]["items"].arrayValue
+                for friend in friendsJSON {
+                    let f = Friend(friend)
+                    friends.append(f)
+                }
+                friends.forEach { print($0.lastName)}
+                self?.saveList(friends)
+                completion(friends)
+            case .failure(let error):
+                print(error)
+            }
+    }
+        }
+    func addFriend(id: Int) {
+        let path = "friends.add"
+        let url = baseUrl+path
+        let parameters: Parameters = [
+            "access_token": Session.instance.token,
+            "v": version,
+            "user_id": String(id)
+        ]
+        
+        AF.request(url, method: .get, parameters: parameters).responseData {
+            response in
+            switch response.result {
+            case .success(let data):
+                let json = JSON(data)
+                print(json)
+            case .failure(let error):
+                let json = JSON(error)
+                print(json)
+            }
+        }
+        
+    }
+    func getGroupsCatalog(completion: @escaping ([Group]) -> Void) {
+        let path = "groups.getCatalog"
+        let url = baseUrl+path
+        let parameters: Parameters = [
+            "user_id": Session.instance.userId,
+            "access_token": Session.instance.token,
+            "v": version
+        ]
+        
+        AF.request(url, method: .get, parameters: parameters).responseData { [weak self]
+            response in
+            switch response.result {
+            case .success(let data):
+                let json = JSON(data)
+                var groups = [Group]()
+                let groupsJSON = json["response"]["items"].arrayValue
+                for group in groupsJSON {
+                    let f = Group(group)
+                    groups.append(f)
+                }
+                self?.saveList(groups)
+                completion(groups)
+            case .failure(let error):
+                print(error)
+            }
+    }
+
+    }
+    
+    func joinGroup(id: Int) {
+        let path = "groups.join"
+        let url = baseUrl+path
+        let parameters: Parameters = [
+            "access_token": Session.instance.token,
+            "v": version,
+            "group_id": String(-id)
+        ]
+        
+        AF.request(url, method: .get, parameters: parameters).responseData {
+            response in
+            switch response.result {
+            case .success(let data):
+                let json = JSON(data)
+                print(json)
+            case .failure(let error):
+                let json = JSON(error)
+                print(json)
+            }
+        }
+    }
+    
     func loadGroupList(completion: @escaping ([Group]) -> Void) {
         let path = "groups.get"
         let url = baseUrl+path

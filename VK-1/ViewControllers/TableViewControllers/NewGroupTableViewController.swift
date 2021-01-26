@@ -8,13 +8,18 @@
 import UIKit
 
 class NewGroupTableViewController: UITableViewController {
+    let networkService = NetworkService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
+        networkService.getGroupsCatalog( completion: { [weak self] groups in
+            self?.groupList = groups
+            self?.tableView.reloadData()
+
+        })
         setupViews()
 
     }
@@ -24,7 +29,7 @@ class NewGroupTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return groups.count
+        return groupList.count
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -33,7 +38,7 @@ class NewGroupTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! GroupsTableViewCell
-        cell.group = groups[indexPath.row]
+        cell.group = groupList[indexPath.row]
         return cell
     }
     
@@ -42,7 +47,7 @@ class NewGroupTableViewController: UITableViewController {
     }
 
     //MARK: - Data
-    var groups: Array<Group> = []
+    var groupList: Array<Group> = []
     
     private func setupViews() {
 
@@ -50,21 +55,34 @@ class NewGroupTableViewController: UITableViewController {
         self.tableView.separatorStyle = .none
         self.tableView.tableFooterView = UIView()
         self.navigationController?.navigationBar.topItem?.title = "Groups"
-        self.navigationController?.navigationBar.barTintColor = UIColor(displayP3Red: 179/255, green: 179/255, blue: 225/255, alpha: 0.95)
+        self.navigationController?.navigationBar.barTintColor = UIColor(displayP3Red: 179/255,
+                                                                        green: 179/255,
+                                                                        blue: 225/255,
+                                                                        alpha: 0.95)
 
     }
     
     func convertGroups(indexPath: IndexPath) {
-        groups.remove(at: indexPath.row)
+        
+        groupList.remove(at: indexPath.row)
         self.tableView.reloadData()
+        
     }
     
     private func showAddGroup(indexPath: IndexPath) {
-        let alert = UIAlertController(title: "Войти в группу", message: "Вы действительно хотите войти в эту группу?", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Yes", style: .default, handler: { [self]action in convertGroups( indexPath: indexPath)})
-        let action2 = UIAlertAction(title: "No", style: .destructive, handler: nil)
-            alert.addAction(action)
-            alert.addAction(action2)
+        
+        let alert = UIAlertController(title: "Войти в группу", message: "Вы действительно хотите войти в группу \(groupList[indexPath.row].name) ?", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Yes", style: .default, handler: { [self] _ in
+                                    self.networkService.joinGroup(id: groupList[indexPath.row].id)
+                                    self.convertGroups( indexPath: indexPath)})
+        
+        
+        let action2 = UIAlertAction(title: "No", style: .destructive, handler: {_ in 
+            self.tableView.reloadData()
+        })
+            
+        alert.addAction(action)
+        alert.addAction(action2)
         
         present(alert, animated: true, completion: nil)
     }

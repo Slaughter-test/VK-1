@@ -32,7 +32,7 @@ class VKWebViewController: UIViewController {
                     URLQueryItem(name: "client_id", value: "7728615"),
                     URLQueryItem(name: "display", value: "mobile"),
                     URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
-                    URLQueryItem(name: "scope", value: "manage,photos,docs,wall,groups"),
+                    URLQueryItem(name: "scope", value: "manage,photos,docs,wall,groups,friends"),
                     URLQueryItem(name: "response_type", value: "token"),
                     URLQueryItem(name: "v", value: "5.68")
                 ]

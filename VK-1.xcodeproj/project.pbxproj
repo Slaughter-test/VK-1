@@ -123,15 +123,24 @@
 				79ACECCA25A38B450024F414 /* Animations */,
 				79ACECA5259F39E70024F414 /* Model */,
 				79ACECA4259F39DD0024F414 /* Cells */,
+				794AD82E25C08F29006CA2D1 /* Storyboards */,
 				79ACECA3259F39CE0024F414 /* ViewControllers */,
 				791F65C4259E177500ECD136 /* AppDelegate.swift */,
 				791F65C6259E177500ECD136 /* SceneDelegate.swift */,
-				791F65CA259E177500ECD136 /* Main.storyboard */,
 				791F65CD259E177800ECD136 /* Assets.xcassets */,
-				791F65CF259E177800ECD136 /* LaunchScreen.storyboard */,
 				791F65D2259E177800ECD136 /* Info.plist */,
 			);
 			path = "VK-1";
+			sourceTree = "<group>";
+		};
+		794AD82E25C08F29006CA2D1 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				791F65CF259E177800ECD136 /* LaunchScreen.storyboard */,
+				791F65CA259E177500ECD136 /* Main.storyboard */,
+			);
+			name = Storyboards;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		7956FF2C25A626F4008274F4 /* UIHelpers */ = {

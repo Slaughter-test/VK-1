@@ -65,6 +65,9 @@ class FullPhotoCollectionViewCell: UICollectionViewCell{
         photoImageView.isUserInteractionEnabled = true
         self.addSubview(likeButton)
         likeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(buttonAction))
+            tap.numberOfTapsRequired = 2
+        self.addGestureRecognizer(tap)
         
         addConstraintsWithFormat("V:|-10-[v0(44)]|", views: likeButton)
         addConstraintsWithFormat("H:|-10-[v0(44)]|", views: likeButton)
