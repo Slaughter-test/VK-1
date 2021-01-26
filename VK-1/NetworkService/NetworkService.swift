@@ -8,6 +8,7 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import RealmSwift
 
 class NetworkService {
 
@@ -16,6 +17,26 @@ class NetworkService {
     let version = "5.68"
     
     //MARK: - Список друзей
+    func saveList(_ list: [Object]) {
+// обработка исключений при работе с хранилищем
+        do {
+// получаем доступ к хранилищу
+            let realm = try Realm()
+            
+// начинаем изменять хранилище
+            realm.beginWrite()
+            
+// кладем все объекты класса погоды в хранилище
+            realm.add(list)
+            
+// завершаем изменения хранилища
+            try realm.commitWrite()
+        } catch {
+// если произошла ошибка, выводим ее в консоль
+            print(error)
+        }
+    }
+
     func loadFriendList(completion: @escaping ([Friend]) -> Void) {
         let path = "friends.get"
         let url = baseUrl+path
@@ -28,7 +49,7 @@ class NetworkService {
         ]
 
         
-        AF.request(url, method: .get, parameters: parameters).responseData {
+        AF.request(url, method: .get, parameters: parameters).responseData { [weak self]
             response in
             switch response.result {
             case .success(let data):
@@ -40,6 +61,7 @@ class NetworkService {
                     friends.append(f)
                 }
                 friends.forEach { print($0.lastName)}
+                self?.saveList(friends)
                 completion(friends)
             case .failure(let error):
                 print(error)
@@ -58,7 +80,7 @@ class NetworkService {
         ]
 
         
-        AF.request(url, method: .get, parameters: parameters).responseData {
+        AF.request(url, method: .get, parameters: parameters).responseData { [weak self]
             response in
             switch response.result {
             case .success(let data):
@@ -69,6 +91,7 @@ class NetworkService {
                     let f = Group(group)
                     groups.append(f)
                 }
+                self?.saveList(groups)
                 completion(groups)
             case .failure(let error):
                 print(error)
@@ -98,7 +121,7 @@ class NetworkService {
             "extended": "1"
         ]
         // тут запрашиваем альбомы , чтобы получить айдишники
-        AF.request(urlAlbums, method: .get, parameters: parameters).responseJSON { response in
+        AF.request(urlAlbums, method: .get, parameters: parameters).responseJSON { [weak self] response in
             switch response.result {
             case .success(let data):
                 let json = JSON(data)
@@ -121,6 +144,7 @@ class NetworkService {
                                     let photo = Photo(i)
                                     photosList.append(photo)
                                 }
+                                self?.saveList(photosList)
                                 completion(photosList)
                             case .failure(let error):
                                 print(error)
@@ -214,6 +238,7 @@ class NetworkService {
             print(error)
         }
     }
+
 }
 }
 struct Album {

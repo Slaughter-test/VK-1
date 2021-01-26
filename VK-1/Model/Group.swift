@@ -7,15 +7,15 @@
 
 import UIKit
 import SwiftyJSON
+import RealmSwift
 
-struct Group: Codable {
-    let name: String
-    let photo: String
-    let id: Int
+class Group: Object, Codable {
+    @objc dynamic var name: String = ""
+    @objc dynamic var photo: String = ""
+    @objc dynamic var id: Int = 0
     
-    
-     init(_ json: JSON)  {
-        
+     convenience init(_ json: JSON)  {
+        self.init()
         self.name = json["name"].stringValue
         self.photo = json["photo_100"].stringValue
         self.id = -(json["id"].intValue)

@@ -17,13 +17,13 @@ class FullPhotoCollectionViewCell: UICollectionViewCell{
     var photo: Photo? {
         didSet {
             photoImageView.downloaded(from: photo!.photo)
-            if photo?.like.userLikes == 0 {
+            if photo?.like?.userLikes == 0 {
                 self.isLiked = false
             } else {
                 self.isLiked = true
             }
             self.photoId = photo?.id
-            self.likesCount = photo?.like.count
+            self.likesCount = photo?.like?.count
         }
     }
     

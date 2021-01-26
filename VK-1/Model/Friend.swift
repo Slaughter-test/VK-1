@@ -7,16 +7,18 @@
 
 import UIKit
 import SwiftyJSON
+import RealmSwift
 
-struct Friend: Codable {
-    let firstName: String
-    let lastName: String
-    let photo: String
-    let id: Int
+class Friend: Object, Codable {
+    @objc dynamic var firstName = ""
+    @objc dynamic var lastName = ""
+    @objc dynamic var photo = ""
+    @objc dynamic var id = 0
+
     
     
-     init(_ json: JSON)  {
-        
+     convenience init(_ json: JSON)  {
+        self.init()
         self.firstName = json["first_name"].stringValue
         self.lastName = json["last_name"].stringValue
         self.photo = json["photo"].stringValue
