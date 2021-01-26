@@ -9,7 +9,6 @@ import UIKit
 
 class PhotoViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    var flag: Bool?
     var userId: Int?
     var photos:[Photo] = []
     var indexPath:IndexPath!
@@ -19,16 +18,13 @@ class PhotoViewController: UICollectionViewController, UICollectionViewDelegateF
         setupViews()
         collectionView.register(FullPhotoCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         collectionView.delegate = self
-        //эта часть пока работает не совсем корректно :( вместо нужной фотки открывает предыдущую
-        flag = true
         collectionView.collectionViewLayout.invalidateLayout()
-        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
-        flag = false
-        collectionView.collectionViewLayout.invalidateLayout()
-        
-
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.0001) {
+            self.collectionView.scrollToItem(at: self.indexPath,
+                                             at: .centeredHorizontally,
+                                             animated: true)
+        }
     }
-    
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photos.count
