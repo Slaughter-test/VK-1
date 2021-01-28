@@ -108,6 +108,7 @@ class FullPhotoCollectionViewCell: UICollectionViewCell{
                self.likeButton.transform = self.transform.scaledBy(x: 2, y: 2)
                self.likeButton.setImage(newImage, for: .normal)
                self.likeButton.tintColor = newTint
+            self.likeButton.setTitleColor(newTint, for: .normal)
            }, completion: {_ in
                UIView.animate(withDuration: 0.1, animations: {
                    self.likeButton.transform = CGAffineTransform.identity
@@ -118,9 +119,12 @@ class FullPhotoCollectionViewCell: UICollectionViewCell{
         if isLiked == true {
             likeButton.tintColor = .systemRed
             likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            likeButton.setTitleColor(.systemRed, for: .normal)
+
         } else {
             likeButton.tintColor = UIColor(displayP3Red: 179/255, green: 179/255, blue: 225/255, alpha: 0.95)
             likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+            likeButton.setTitleColor(UIColor(displayP3Red: 179/255, green: 179/255, blue: 225/255, alpha: 0.95), for: .normal)
         }
         likeButton.setTitle(String(self.likesCount!), for: .normal)
     }

@@ -22,7 +22,7 @@ class PhotoViewController: UICollectionViewController, UICollectionViewDelegateF
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.0001) {
             self.collectionView.scrollToItem(at: self.indexPath,
                                              at: .centeredHorizontally,
-                                             animated: true)
+                                             animated: false)
         }
     }
     
