@@ -15,9 +15,9 @@ class NetworkService {
     //MARK: - Базовые данные
     let baseUrl = "https://api.vk.com/method/"
     let version = "5.68"
-    let configuration = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
     
-    //MARK: - Список друзей
+    //MARK: - Realm
+    let configuration = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
     func saveList(_ list: [Object]) {
         do {
             let realm = try Realm(configuration: configuration)
@@ -28,6 +28,8 @@ class NetworkService {
             print(error)
         }
     }
+    
+    //MARK: - Список друзей
 
     func loadFriendList(completion: @escaping ([Friend]) -> Void) {
         let path = "friends.get"
