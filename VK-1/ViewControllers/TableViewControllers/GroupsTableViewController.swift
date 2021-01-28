@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class GroupsTableViewController: UITableViewController {
 
@@ -17,7 +18,7 @@ class GroupsTableViewController: UITableViewController {
         self.searchBar.delegate = self
 
         networkService.loadGroupList( completion: { [weak self] groups in
-            self?.groupList = groups
+            self?.loadData()
             self?.tableView.reloadData()
 
         })
@@ -75,6 +76,20 @@ class GroupsTableViewController: UITableViewController {
     
     @objc func addGroup() {
         performSegue(withIdentifier: "addGroup", sender: self)
+    }
+    func loadData() {
+        do {
+                   let realm = try Realm()
+                   
+                   let groups = realm.objects(Group.self).sorted(byKeyPath: "name")
+                   
+                   self.groupList = Array(groups)
+                   
+               } catch {
+       // если произошла ошибка, выводим ее в консоль
+                   print(error)
+               }
+
     }
     
 

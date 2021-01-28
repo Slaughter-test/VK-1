@@ -15,24 +15,16 @@ class NetworkService {
     //MARK: - Базовые данные
     let baseUrl = "https://api.vk.com/method/"
     let version = "5.68"
+    let configuration = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
     
     //MARK: - Список друзей
     func saveList(_ list: [Object]) {
-// обработка исключений при работе с хранилищем
         do {
-// получаем доступ к хранилищу
-            let realm = try Realm()
-            
-// начинаем изменять хранилище
+            let realm = try Realm(configuration: configuration)
             realm.beginWrite()
-            
-// кладем все объекты класса погоды в хранилище
-            realm.add(list)
-            
-// завершаем изменения хранилища
+            realm.add(list, update: .all)
             try realm.commitWrite()
         } catch {
-// если произошла ошибка, выводим ее в консоль
             print(error)
         }
     }

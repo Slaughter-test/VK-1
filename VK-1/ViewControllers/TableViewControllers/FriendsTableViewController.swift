@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class FriendsTableViewController: UITableViewController {
     
@@ -21,7 +22,7 @@ class FriendsTableViewController: UITableViewController {
         self.searchBar.delegate = self
         
         networkService.loadFriendList { [weak self] friends in
-            self?.friendList = friends
+            self?.loadData()
             self?.tableView.reloadData()
 
         }
@@ -82,6 +83,20 @@ class FriendsTableViewController: UITableViewController {
     
     @objc func addFriend() {
         performSegue(withIdentifier: "addFriend", sender: self)
+    }
+    func loadData() {
+        do {
+                   let realm = try Realm()
+                   
+                   let friends = realm.objects(Friend.self).sorted(byKeyPath: "lastName")
+                   
+                   self.friendList = Array(friends)
+                   
+               } catch {
+       // если произошла ошибка, выводим ее в консоль
+                   print(error)
+               }
+
     }
 }
 extension FriendsTableViewController: UISearchBarDelegate {
