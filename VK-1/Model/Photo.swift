@@ -22,6 +22,10 @@ class Photo: Object, Codable {
         self.id = json["id"].intValue
         self.like = Like(json["likes"])
     }
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 
 }
 struct Like: Codable {
@@ -32,5 +36,7 @@ struct Like: Codable {
         self.userLikes = json["user_likes"].intValue
         self.count = json["count"].intValue
     }
+    
+    
 
 }

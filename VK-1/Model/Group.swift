@@ -20,5 +20,8 @@ class Group: Object, Codable {
         self.photo = json["photo_100"].stringValue
         self.id = -(json["id"].intValue)
     }
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 
 }

@@ -24,5 +24,8 @@ class Friend: Object, Codable {
         self.photo = json["photo"].stringValue
         self.id = json["id"].intValue
     }
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 
 }
