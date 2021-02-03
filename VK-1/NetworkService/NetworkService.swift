@@ -31,7 +31,7 @@ class NetworkService {
     
     //MARK: - Список друзей
 
-    func loadFriendList(completion: @escaping ([Friend]) -> Void) {
+    public func loadFriendList() {
         let path = "friends.get"
         let url = baseUrl+path
         let parameters: Parameters = [
@@ -54,9 +54,7 @@ class NetworkService {
                     let f = Friend(friend)
                     friends.append(f)
                 }
-                friends.forEach { print($0.lastName)}
                 self?.saveList(friends)
-                completion(friends)
             case .failure(let error):
                 print(error)
             }
@@ -74,7 +72,7 @@ class NetworkService {
         ]
 
         
-        AF.request(url, method: .get, parameters: parameters).responseData { [weak self]
+        AF.request(url, method: .get, parameters: parameters).responseData {
             response in
             switch response.result {
             case .success(let data):
@@ -85,8 +83,6 @@ class NetworkService {
                     let f = Friend(friend)
                     friends.append(f)
                 }
-                friends.forEach { print($0.lastName)}
-                self?.saveList(friends)
                 completion(friends)
             case .failure(let error):
                 print(error)
@@ -95,6 +91,28 @@ class NetworkService {
         }
     func addFriend(id: Int) {
         let path = "friends.add"
+        let url = baseUrl+path
+        let parameters: Parameters = [
+            "access_token": Session.instance.token,
+            "v": version,
+            "user_id": String(id)
+        ]
+        
+        AF.request(url, method: .get, parameters: parameters).responseData {
+            response in
+            switch response.result {
+            case .success(let data):
+                let json = JSON(data)
+                print(json)
+            case .failure(let error):
+                let json = JSON(error)
+                print(json)
+            }
+        }
+        
+    }
+    func deleteFriend(id: Int) {
+        let path = "friends.delete"
         let url = baseUrl+path
         let parameters: Parameters = [
             "access_token": Session.instance.token,
@@ -124,7 +142,7 @@ class NetworkService {
             "v": version
         ]
         
-        AF.request(url, method: .get, parameters: parameters).responseData { [weak self]
+        AF.request(url, method: .get, parameters: parameters).responseData {
             response in
             switch response.result {
             case .success(let data):
@@ -135,7 +153,6 @@ class NetworkService {
                     let f = Group(group)
                     groups.append(f)
                 }
-                self?.saveList(groups)
                 completion(groups)
             case .failure(let error):
                 print(error)
@@ -166,7 +183,29 @@ class NetworkService {
         }
     }
     
-    func loadGroupList(completion: @escaping ([Group]) -> Void) {
+    func deleteGroup(id: Int) {
+        let path = "groups.leave"
+        let url = baseUrl+path
+        let parameters: Parameters = [
+            "access_token": Session.instance.token,
+            "v": version,
+            "group_id": String(-id)
+        ]
+        
+        AF.request(url, method: .get, parameters: parameters).responseData {
+            response in
+            switch response.result {
+            case .success(let data):
+                let json = JSON(data)
+                print(json)
+            case .failure(let error):
+                let json = JSON(error)
+                print(json)
+            }
+        }
+    }
+    
+    func loadGroupList() {
         let path = "groups.get"
         let url = baseUrl+path
         let parameters: Parameters = [
@@ -190,7 +229,6 @@ class NetworkService {
                     groups.append(f)
                 }
                 self?.saveList(groups)
-                completion(groups)
             case .failure(let error):
                 print(error)
             }
