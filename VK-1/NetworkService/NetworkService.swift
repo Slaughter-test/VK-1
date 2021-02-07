@@ -9,9 +9,12 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 import RealmSwift
+import FirebaseDatabase
 
 class NetworkService {
-
+    
+    //MARK: - Firebase
+    var ref = Database.database().reference()
     //MARK: - Базовые данные
     let baseUrl = "https://api.vk.com/method/"
     let version = "5.68"

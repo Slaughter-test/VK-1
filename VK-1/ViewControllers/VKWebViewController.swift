@@ -67,10 +67,8 @@ extension VKWebViewController: WKNavigationDelegate {
         
         Session.instance.token = params["access_token"]!
         Session.instance.userId = params["user_id"]!
-        
-        // Выводим все что запросили в консоль
-        print(Session.instance.token)
-        print(Session.instance.userId)
+        networkService.ref.child("users").child(Session.instance.userId).setValue(["username": Session.instance.userId])
+
         decisionHandler(.cancel)
         performSegue(withIdentifier: "accessLogin", sender: self)
     }

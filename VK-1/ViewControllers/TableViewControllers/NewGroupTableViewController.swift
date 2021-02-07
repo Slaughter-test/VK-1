@@ -74,6 +74,7 @@ class NewGroupTableViewController: UITableViewController {
         let alert = UIAlertController(title: "Войти в группу", message: "Вы действительно хотите войти в группу \(groupList[indexPath.row].name) ?", preferredStyle: .alert)
         let action = UIAlertAction(title: "Yes", style: .default, handler: { [self] _ in
                                     self.networkService.joinGroup(id: groupList[indexPath.row].id)
+                                    networkService.ref.child("users").child(Session.instance.userId).child("\(groupList[indexPath.row].id)").setValue(["\(groupList[indexPath.row].id)" : "\(groupList[indexPath.row].name)"])
                                     self.convertGroups( indexPath: indexPath)})
         
         

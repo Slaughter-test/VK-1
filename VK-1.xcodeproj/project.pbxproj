@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		790BBEB925B758320039083E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790BBEB825B758320039083E /* Extensions.swift */; };
+		7914997625D015C000B9B491 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7914997525D015C000B9B491 /* GoogleService-Info.plist */; };
 		791F65C5259E177500ECD136 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791F65C4259E177500ECD136 /* AppDelegate.swift */; };
 		791F65C7259E177500ECD136 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791F65C6259E177500ECD136 /* SceneDelegate.swift */; };
 		791F65C9259E177500ECD136 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791F65C8259E177500ECD136 /* LoginViewController.swift */; };
@@ -47,6 +48,7 @@
 		0143E18EA27ACA726CAAA9E0 /* Pods-VK-1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VK-1.debug.xcconfig"; path = "Target Support Files/Pods-VK-1/Pods-VK-1.debug.xcconfig"; sourceTree = "<group>"; };
 		03D33A46522890FD8F289F89 /* Pods_VK_1.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VK_1.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		790BBEB825B758320039083E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		7914997525D015C000B9B491 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		791F65C1259E177500ECD136 /* VK-1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "VK-1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		791F65C4259E177500ECD136 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		791F65C6259E177500ECD136 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				791F65C4259E177500ECD136 /* AppDelegate.swift */,
 				791F65C6259E177500ECD136 /* SceneDelegate.swift */,
 				791F65CD259E177800ECD136 /* Assets.xcassets */,
+				7914997525D015C000B9B491 /* GoogleService-Info.plist */,
 				791F65D2259E177800ECD136 /* Info.plist */,
 			);
 			path = "VK-1";
@@ -314,6 +317,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				791F65D1259E177800ECD136 /* LaunchScreen.storyboard in Resources */,
+				7914997625D015C000B9B491 /* GoogleService-Info.plist in Resources */,
 				791F65CE259E177800ECD136 /* Assets.xcassets in Resources */,
 				791F65CC259E177500ECD136 /* Main.storyboard in Resources */,
 			);
