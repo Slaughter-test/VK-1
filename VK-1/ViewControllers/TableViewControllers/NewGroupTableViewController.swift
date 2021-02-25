@@ -23,6 +23,16 @@ class NewGroupTableViewController: UITableViewController {
         setupViews()
 
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        networkService.getGroupsCatalog( completion: { [weak self] groups in
+            self?.groupList = groups
+            self?.tableView.reloadData()
+
+        })
+        self.tableView.reloadData()
+    }
 
     // MARK: - Table view data source
 

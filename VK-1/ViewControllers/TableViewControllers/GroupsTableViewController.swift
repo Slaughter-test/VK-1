@@ -29,6 +29,17 @@ class GroupsTableViewController: UITableViewController {
         super.viewWillDisappear(true)
         self.token?.invalidate()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        realmObserver()
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.searchBar.delegate = self
+
+        networkService.loadGroupList()
+        self.tableView.reloadData()
+    }
 
     // MARK: - Table view data source
 

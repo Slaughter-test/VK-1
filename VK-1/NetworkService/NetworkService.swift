@@ -153,8 +153,10 @@ class NetworkService {
                 var groups = [Group]()
                 let groupsJSON = json["response"]["items"].arrayValue
                 for group in groupsJSON {
+                    if group["is_member"].intValue == 0 {
                     let f = Group(group)
                     groups.append(f)
+                }
                 }
                 completion(groups)
             case .failure(let error):
