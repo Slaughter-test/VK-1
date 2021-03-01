@@ -284,48 +284,17 @@
             </objects>
             <point key="canvasLocation" x="3514" y="-695"/>
         </scene>
-        <!--Feed-->
-        <scene sceneID="ChB-xM-TJc">
-            <objects>
-                <collectionViewController storyboardIdentifier="FeedVC" id="Hog-Sw-cIi" customClass="FeedCollectionViewController" customModule="VK_1" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Ag4-5J-7AP">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Gls-xo-lK8">
-                            <size key="itemSize" width="128" height="128"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells/>
-                        <connections>
-                            <outlet property="dataSource" destination="Hog-Sw-cIi" id="dfA-E8-l4t"/>
-                            <outlet property="delegate" destination="Hog-Sw-cIi" id="fSF-Hw-b5H"/>
-                        </connections>
-                    </collectionView>
-                    <tabBarItem key="tabBarItem" title="Feed" image="newspaper" catalog="system" selectedImage="newspaper.fill" id="50M-cv-MPi"/>
-                    <navigationItem key="navigationItem" id="Ns0-37-7hn"/>
-                    <connections>
-                        <segue destination="hGm-rL-5jU" kind="unwind" identifier="unwindToRootViewController" unwindAction="unwindToRootViewControllerWithSegue:" id="tW4-Z1-l6i"/>
-                    </connections>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vbK-By-8uH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="hGm-rL-5jU" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="2704" y="76"/>
-        </scene>
         <!--Item-->
         <scene sceneID="Llu-YY-CUe">
             <objects>
                 <navigationController storyboardIdentifier="FeedNVC" id="E8Z-AU-39V" customClass="VKViewController" customModule="VK_1" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="f2E-Aw-ILM"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="newspaper.fill" catalog="system" selectedImage="newspaper" id="f2E-Aw-ILM"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Lp3-Is-eHo">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="Hog-Sw-cIi" kind="relationship" relationship="rootViewController" id="wJM-SX-6DB"/>
+                        <segue destination="VwS-xd-2fr" kind="relationship" relationship="rootViewController" id="oiL-oS-xkJ"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IsF-A2-Yao" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -369,6 +338,35 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="evV-54-lJW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1989" y="1569"/>
+        </scene>
+        <!--Feed Collection View Controller-->
+        <scene sceneID="Dlp-Te-dtu">
+            <objects>
+                <tableViewController id="VwS-xd-2fr" customClass="FeedCollectionViewController" customModule="VK_1" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="crt-ia-eMn">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="bad-8n-CjM">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bad-8n-CjM" id="Dnz-yB-JcT">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="VwS-xd-2fr" id="uJM-aw-eYC"/>
+                            <outlet property="delegate" destination="VwS-xd-2fr" id="itW-eq-lpK"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="gqV-jw-Fbh"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CEK-wV-cNI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2580" y="76"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

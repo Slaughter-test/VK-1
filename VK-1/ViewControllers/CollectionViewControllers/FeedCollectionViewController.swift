@@ -9,33 +9,36 @@ import UIKit
 
 private let reuseIdentifier = "feedCell"
 
-class FeedCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class FeedCollectionViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.collectionView!.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: "feedCell")
-        self.collectionView?.backgroundColor = UIColor(white: 0.90, alpha: 1) 
+        self.tableView?.register(FeedCollectionViewCell.self, forCellReuseIdentifier: "feedCell")
+        self.tableView?.backgroundColor = UIColor(white: 0.90, alpha: 1)
+        self.tableView?.delaysContentTouches = false
         setupViews()
 
     }
 
     // MARK: - UICollectionViewDataSource
 
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
-
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FeedCollectionViewCell
-        cell.backgroundColor = .white
     
-        return cell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! FeedCollectionViewCell
+        cell.backgroundColor = .white
+        cell.isUserInteractionEnabled = true
+        cell.selectionStyle = .none
         
+        return cell
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.bounds.width, height: 500)
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 500
     }
+
     private func setupViews() {
         self.navigationController?.navigationBar.topItem?.title = "Feed"
         let backButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(exit))

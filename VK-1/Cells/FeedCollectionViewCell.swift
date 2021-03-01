@@ -7,11 +7,12 @@
 
 import UIKit
 
-class FeedCollectionViewCell: UICollectionViewCell {
+class FeedCollectionViewCell: UITableViewCell {
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
+        self.isUserInteractionEnabled = true
     }
     
     required init?(coder: NSCoder) {
@@ -98,15 +99,15 @@ class FeedCollectionViewCell: UICollectionViewCell {
     
     private func setupViews() {
         backgroundColor = UIColor.white
-        addSubview(avatarView)
-        addSubview(nameLabel)
-        addSubview(dateLabel)
-        addSubview(postText)
-        addSubview(photoImageView)
-        addSubview(dividedLineView)
-        addSubview(likeButton)
-        addSubview(commentButton)
-        addSubview(shareButton)
+        contentView.addSubview(avatarView)
+        contentView.addSubview(nameLabel)
+        contentView.addSubview(dateLabel)
+        contentView.addSubview(postText)
+        contentView.addSubview(photoImageView)
+        contentView.addSubview(dividedLineView)
+        contentView.addSubview(likeButton)
+        contentView.addSubview(commentButton)
+        contentView.addSubview(shareButton)
         likeButton.setTitle(String(self.likesCount), for: .normal)
         likeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         if like == true {
