@@ -48,7 +48,12 @@ class FeedCollectionViewController: UITableViewController {
 
     }
     @objc func exit() {
-        self.performSegue(withIdentifier: "unwindToRootViewController", sender: self)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
+             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                Darwin.exit(0)
+             }
+        }
     }
 
 }
