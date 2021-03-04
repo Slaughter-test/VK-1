@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import Kingfisher
 
 class FeedCollectionViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
+
         self.isUserInteractionEnabled = true
     }
     
@@ -20,8 +23,23 @@ class FeedCollectionViewCell: UITableViewCell {
     }
     
     //MARK: Data
+    var post: Post? {
+        didSet {
+            if post?.userLikes == 0 {
+                like = false
+            }
+            likesCount = post!.likes
+            comments = post!.comments
+            time = post!.date
+            postedText = post!.text
+            
+        }
+    }
     var like = true
-    var likesCount = 200
+    var likesCount = 0
+    var comments = 0
+    var postedText = ""
+    var time = ""
     
     //MARK: Elements
     private let likedImage = UIImage(systemName: "heart.fill")
@@ -40,28 +58,24 @@ class FeedCollectionViewCell: UITableViewCell {
     let nameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
-        label.text = "Kitana Khan"
         label.font = UIFont.boldSystemFont(ofSize: 16)
        return label
     }()
     let dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "30.02.2020"
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor =  UIColor(red: 155/255, green: 161/255, blue: 171/255, alpha: 1)
         return label
     }()
     let postText: UILabel = {
         let label = UILabel()
-        label.text = "В отличие от большинства других языков программирования, Bash не производит разделения переменных по типам. По сути, переменные Bash являются строковыми переменными, но, в зависимости от контекста, Bash допускает целочисленную арифметику с переменными. Определяющим фактором здесь служит содержимое переменных."
         label.font = UIFont.systemFont(ofSize: 14)
-        label.numberOfLines = 4
+        label.textAlignment = .natural
         return label
     }()
     
     let photoImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = (UIImage(named: "3"))
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
@@ -79,7 +93,6 @@ class FeedCollectionViewCell: UITableViewCell {
     
     let commentButton: UIButton = {
         let button = UIButton()
-        button.setTitle("228", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         button.tintColor = UIColor(displayP3Red: 179/255, green: 179/255, blue: 225/255, alpha: 0.95)
@@ -102,33 +115,54 @@ class FeedCollectionViewCell: UITableViewCell {
         contentView.addSubview(avatarView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(dateLabel)
-        contentView.addSubview(postText)
         contentView.addSubview(photoImageView)
         contentView.addSubview(dividedLineView)
         contentView.addSubview(likeButton)
         contentView.addSubview(commentButton)
         contentView.addSubview(shareButton)
+        contentView.addSubview(postText)
+        addConstraintsWithFormat("H:|-8-[v0]-8-|", views: postText)
+        addConstraintsWithFormat("V:|-14-[v0(20)]-4-[v1(14)]-8-[v2]-8-[v3]-4-[v4(2)]-4-[v5(44)]-4-|", views: nameLabel, dateLabel, postText, photoImageView,dividedLineView, likeButton)
         likeButton.setTitle(String(self.likesCount), for: .normal)
         likeButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        if like == true {
-            likeButton.tintColor = .systemRed
-            likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        } else {
-            likeButton.tintColor = UIColor(displayP3Red: 179/255, green: 179/255, blue: 225/255, alpha: 0.95)
-            likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
-        }
+
         
         addConstraintsWithFormat("H:|-8-[v0(44)]-8-[v1]|", views: avatarView, nameLabel)
-        addConstraintsWithFormat("H:|-8-[v0]-8-|", views: postText)
         addConstraintsWithFormat("H:|-60-[v0]-|", views: dateLabel)
         addConstraintsWithFormat("V:|-8-[v0(44)]|", views: avatarView)
-        addConstraintsWithFormat("V:|-14-[v0(20)]-4-[v1(14)]-8-[v2(100)]-8-[v3]-4-[v4(2)]-4-[v5(44)]-4-|", views: nameLabel, dateLabel, postText, photoImageView,dividedLineView, likeButton)
         addConstraintsWithFormat("H:|[v0]|", views: photoImageView)
         addConstraintsWithFormat("H:|[v0]|", views: dividedLineView)
         addConstraintsWithFormat("H:|-8-[v0]-8-[v1(v0)]-8-[v2(v1)]|", views: likeButton, commentButton,shareButton)
         addConstraintsWithFormat("V:|-453-[v0(44)]-|", views: commentButton)
         addConstraintsWithFormat("V:|-453-[v0(44)]-|", views: shareButton)
 
+        
+    }
+    
+    public func updateChanges() {
+        commentButton.setTitle("\(comments)", for: .normal)
+        likeButton.setTitle("\(likesCount)", for: .normal)
+        if post?.userLikes != 0 {
+            likeButton.tintColor = .systemRed
+            likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        } else {
+            likeButton.tintColor = UIColor(displayP3Red: 179/255, green: 179/255, blue: 225/255, alpha: 0.95)
+            likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        }
+        postText.text = postedText
+        dateLabel.text = time
+        if postText.text == "" {
+            postText.numberOfLines = 0
+        } else {
+            postText.numberOfLines = 4
+        }
+        avatarView.downloaded(from: post!.avatar)
+        nameLabel.text = post!.name
+        if post?.photos != [] {
+        photoImageView.downloaded(from: post!.photos[0])
+            photoImageView.contentMode = .scaleToFill
+
+        }
         
     }
     
