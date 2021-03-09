@@ -381,7 +381,7 @@ class NetworkService {
     }
 
 }
-}
+    
 struct Album {
     let id: Int
     
@@ -391,3 +391,4 @@ struct Album {
     }
 }
 
+}
