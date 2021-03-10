@@ -74,7 +74,6 @@ class NewsFeedService {
                             }
                         }
                         let f = Post(post, photos, avatar: avatar, name: name)
-                        print("TTT" + "\(f.photos)")
                         posts.append(f)
                         }
                     }

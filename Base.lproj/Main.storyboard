@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -147,7 +148,9 @@
         <scene sceneID="1qb-D4-gEC">
             <objects>
                 <navigationController id="sd1-nc-fF1" customClass="VKViewController" customModule="VK_1" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Groups" image="person.2.fill" catalog="system" selectedImage="person.2" id="dy3-qW-EeD"/>
+                    <tabBarItem key="tabBarItem" title="Groups" image="chat" selectedImage="chat" id="dy3-qW-EeD">
+                        <color key="badgeColor" name="AccentColor"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="gZO-FN-5Gy">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -219,7 +222,9 @@
         <scene sceneID="Syg-y4-ZbX">
             <objects>
                 <navigationController id="KW7-ZS-Jjd" customClass="VKViewController" customModule="VK_1" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Friends" image="figure.wave.circle" catalog="system" selectedImage="figure.wave.circle.fill" id="4Nu-bd-zGn"/>
+                    <tabBarItem key="tabBarItem" title="Friends" image="profile" selectedImage="profile" id="4Nu-bd-zGn">
+                        <color key="badgeColor" name="AccentColor"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="n5M-Xf-7WY">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -284,11 +289,13 @@
             </objects>
             <point key="canvasLocation" x="3514" y="-695"/>
         </scene>
-        <!--Item-->
+        <!--Feed-->
         <scene sceneID="Llu-YY-CUe">
             <objects>
                 <navigationController storyboardIdentifier="FeedNVC" id="E8Z-AU-39V" customClass="VKViewController" customModule="VK_1" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" image="newspaper.fill" catalog="system" selectedImage="newspaper" id="f2E-Aw-ILM"/>
+                    <tabBarItem key="tabBarItem" title="Feed" image="feed" selectedImage="feed" id="f2E-Aw-ILM">
+                        <color key="badgeColor" name="AccentColor"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Lp3-Is-eHo">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -373,12 +380,12 @@
         <segue reference="GeP-38-HFY"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="figure.wave.circle" catalog="system" width="128" height="121"/>
-        <image name="figure.wave.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="newspaper" catalog="system" width="128" height="108"/>
-        <image name="newspaper.fill" catalog="system" width="128" height="111"/>
-        <image name="person.2" catalog="system" width="128" height="81"/>
-        <image name="person.2.fill" catalog="system" width="128" height="80"/>
+        <image name="chat" width="23.666666030883789" height="22.666666030883789"/>
+        <image name="feed" width="20" height="20"/>
+        <image name="profile" width="24.333333969116211" height="20"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

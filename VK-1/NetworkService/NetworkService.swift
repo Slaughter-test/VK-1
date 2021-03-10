@@ -21,11 +21,11 @@ class NetworkService {
     
     //MARK: - Realm
     let configuration = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
-    func saveList(_ list: [Object]) {
+    public func saveList(_ list: [Object]) {
         do {
             let realm = try Realm(configuration: configuration)
             realm.beginWrite()
-            realm.add(list, update: .all)
+            realm.add(list, update: .modified)
             try realm.commitWrite()
         } catch {
             print(error)
@@ -44,18 +44,17 @@ class NetworkService {
             "fields": "city, domain, photo",
             "order": "name"
         ]
-
         
         AF.request(url, method: .get, parameters: parameters).responseData { [weak self]
             response in
             switch response.result {
             case .success(let data):
                 let json = JSON(data)
-                var friends = [Friend]()
+                let friends = [Friend]()
                 let friendsJSON = json["response"]["items"].arrayValue
-                for friend in friendsJSON {
-                    let f = Friend(friend)
-                    friends.append(f)
+                for _ in friendsJSON {
+//                    let f = Friend(friend)
+//                    friends.append(f)
                 }
                 self?.saveList(friends)
             case .failure(let error):
@@ -80,11 +79,11 @@ class NetworkService {
             switch response.result {
             case .success(let data):
                 let json = JSON(data)
-                var friends = [Friend]()
+                let friends = [Friend]()
                 let friendsJSON = json["response"]["items"].arrayValue
-                for friend in friendsJSON {
-                    let f = Friend(friend)
-                    friends.append(f)
+                for _ in friendsJSON {
+//                    let f = Friend(friend)
+//                    friends.append(f)
                 }
                 completion(friends)
             case .failure(let error):

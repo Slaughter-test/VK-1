@@ -31,6 +31,9 @@
 		7956FF4425A63558008274F4 /* VKPushAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7956FF4325A63558008274F4 /* VKPushAnimator.swift */; };
 		7965EA1325ACC239004BFB16 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7965EA1225ACC239004BFB16 /* Session.swift */; };
 		796C0E4F25B4615F006037FD /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 796C0E4E25B4615F006037FD /* WebKit.framework */; };
+		7991437625F7D3FF00BCDE5E /* RequestOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7991437525F7D3FF00BCDE5E /* RequestOperation.swift */; };
+		7991437925F7D57700BCDE5E /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7991437825F7D57700BCDE5E /* AsyncOperation.swift */; };
+		7991438025F7DEDE00BCDE5E /* RealmOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7991437F25F7DEDE00BCDE5E /* RealmOperations.swift */; };
 		79ACECA7259F39F40024F414 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79ACECA6259F39F40024F414 /* Post.swift */; };
 		79ACECB2259F41FE0024F414 /* FeedCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79ACECB1259F41FE0024F414 /* FeedCollectionViewController.swift */; };
 		79ACECB5259F43570024F414 /* FeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79ACECB4259F43570024F414 /* FeedCollectionViewCell.swift */; };
@@ -74,6 +77,9 @@
 		7956FF4325A63558008274F4 /* VKPushAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKPushAnimator.swift; sourceTree = "<group>"; };
 		7965EA1225ACC239004BFB16 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		796C0E4E25B4615F006037FD /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		7991437525F7D3FF00BCDE5E /* RequestOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestOperation.swift; sourceTree = "<group>"; };
+		7991437825F7D57700BCDE5E /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
+		7991437F25F7DEDE00BCDE5E /* RealmOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmOperations.swift; sourceTree = "<group>"; };
 		79ACECA6259F39F40024F414 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		79ACECB1259F41FE0024F414 /* FeedCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewController.swift; sourceTree = "<group>"; };
 		79ACECB4259F43570024F414 /* FeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -122,6 +128,7 @@
 		791F65C3259E177500ECD136 /* VK-1 */ = {
 			isa = PBXGroup;
 			children = (
+				7991437425F7D3EB00BCDE5E /* Operations */,
 				79E7109D25B455480059A41D /* NetworkService */,
 				7956FF2C25A626F4008274F4 /* UIHelpers */,
 				79ACECCA25A38B450024F414 /* Animations */,
@@ -187,6 +194,16 @@
 				7956FF2925A5D7CA008274F4 /* PhotoViewController.swift */,
 			);
 			path = CollectionViewControllers;
+			sourceTree = "<group>";
+		};
+		7991437425F7D3EB00BCDE5E /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				7991437525F7D3FF00BCDE5E /* RequestOperation.swift */,
+				7991437825F7D57700BCDE5E /* AsyncOperation.swift */,
+				7991437F25F7DEDE00BCDE5E /* RealmOperations.swift */,
+			);
+			path = Operations;
 			sourceTree = "<group>";
 		};
 		79ACECA3259F39CE0024F414 /* ViewControllers */ = {
@@ -382,12 +399,14 @@
 				7956FF3625A630B8008274F4 /* VKPopAnimator.swift in Sources */,
 				7956FF2725A5C65E008274F4 /* Group.swift in Sources */,
 				7956FF2425A5C589008274F4 /* GroupsTableViewCell.swift in Sources */,
+				7991437625F7D3FF00BCDE5E /* RequestOperation.swift in Sources */,
 				790BBEB925B758320039083E /* Extensions.swift in Sources */,
 				7956FF2125A5C56C008274F4 /* NewGroupTableViewController.swift in Sources */,
 				79ACECB5259F43570024F414 /* FeedCollectionViewCell.swift in Sources */,
 				79304C6525AA35EE00E58CB4 /* FullPhotoCollectionViewCell.swift in Sources */,
 				79304C6825AA3DC400E58CB4 /* Photo.swift in Sources */,
 				791F65C9259E177500ECD136 /* LoginViewController.swift in Sources */,
+				7991438025F7DEDE00BCDE5E /* RealmOperations.swift in Sources */,
 				79304C6225A9F28800E58CB4 /* PhotoCollectionViewCell.swift in Sources */,
 				7956FF1E25A5C55D008274F4 /* GroupsTableViewController.swift in Sources */,
 				79E7109F25B455590059A41D /* NetworkService.swift in Sources */,
@@ -404,6 +423,7 @@
 				79304C5F25A9F25000E58CB4 /* PhotoCollectionViewController.swift in Sources */,
 				791F65C7259E177500ECD136 /* SceneDelegate.swift in Sources */,
 				79D6944D25EE94350051C85F /* NewsFeedService.swift in Sources */,
+				7991437925F7D57700BCDE5E /* AsyncOperation.swift in Sources */,
 				79ACECBB25A0B5070024F414 /* Friend.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
