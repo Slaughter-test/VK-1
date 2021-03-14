@@ -7,25 +7,42 @@
 
 import UIKit
 import RealmSwift
+import Alamofire
 
 class FriendsTableViewController: UITableViewController {
     
     let networkService = NetworkService()
-    private lazy var friendList = try? Realm().objects(Friend.self).sorted(byKeyPath: "lastName")
-
+    let operationQueue = OperationQueue()
+    
+    var friendList = try? Realm().objects(Friend.self).sorted(byKeyPath: "lastName")
+    
+    
+    let url = "https://api.vk.com/method/friends.get"
+    let parameters: Parameters = [
+        "user_id": Session.instance.userId,
+        "access_token": Session.instance.token,
+        "v": "5.68",
+        "fields": "city, domain, photo",
+        "order": "name"
+    ]
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        realmObserver()
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.searchBar.delegate = self
         
-        networkService.loadFriendList()
-        self.tableView.reloadData()
-        
 
         setupViews()
+        updateData()
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(updateData), for: .valueChanged)
+        
+
+        // this is the replacement of implementing: "collectionView.addSubview(refreshControl)"
+        self.tableView.refreshControl = refreshControl
     }
     
     override  func viewWillDisappear(_ animated: Bool) {
@@ -38,7 +55,7 @@ class FriendsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searching == false {
-            return friendList?.count ?? 0 } else {
+            return friendList?.count ?? 0} else {
                 return searchedFriends?.count ?? 0
             }
     }
@@ -57,7 +74,7 @@ class FriendsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(identifier: "PhotoCollectionViewController1") as! PhotoCollectionViewController
         if searching == false {
-            vc.id = friendList?[indexPath.row].id ?? 0 } else {
+            vc.id = friendList?[indexPath.row].id ?? 0} else {
                 vc.id = searchedFriends?[indexPath.row].id ?? 0
             }
         self.navigationController?.pushViewController(vc, animated: true)
@@ -92,6 +109,23 @@ class FriendsTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem  = addFriendButton
         self.navigationItem.titleView = searchBar
     }
+    @objc
+    private func updateData() {
+        let request = AF.request(url,
+                                 method: .get,
+                                 parameters: parameters)
+        
+        let rp = RequestOperation(request: request)
+        let parseOp = ParseDataOperation()
+        parseOp.addDependency(rp)
+        let realmOp = RealmOperations()
+        realmOp.addDependency(parseOp)
+        operationQueue.addOperations([rp, parseOp, realmOp], waitUntilFinished: false)
+        friendList = try? Realm().objects(Friend.self).sorted(byKeyPath: "lastName")
+        if refreshControl?.isRefreshing == true {
+            self.refreshControl?.endRefreshing()
+        }
+    }
     
     private func showDeleteFriend(indexPath: IndexPath) {
         let friend = friendList![indexPath.row]
@@ -106,6 +140,7 @@ class FriendsTableViewController: UITableViewController {
             } catch {
                 print(error)
             }
+            self.tableView.reloadData()
         })
         let action2 = UIAlertAction(title: "No", style: .destructive, handler: {_ in
             self.tableView.reloadData()
@@ -119,6 +154,7 @@ class FriendsTableViewController: UITableViewController {
     @objc func addFriend() {
         performSegue(withIdentifier: "addFriend", sender: self)
     }
+    
     func realmObserver() {
         self.token = friendList?.observe {  (changes: RealmCollectionChange) in
                     switch changes {
@@ -144,12 +180,13 @@ class FriendsTableViewController: UITableViewController {
     
     
 }
+
 extension FriendsTableViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.tableView.reloadData()
         if searchText != "" {
             searchedFriends = friendList!.filter("lastName contains '\(searchText)'")
-        } else { searchedFriends = friendList! }
+        } else { searchedFriends = friendList }
         searching = true
         self.tableView.reloadData()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action:  #selector(self.searchBarCancelButtonClicked(_:)))

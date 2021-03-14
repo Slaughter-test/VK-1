@@ -136,7 +136,6 @@ class GroupsTableViewController: UITableViewController {
                     case .error(let error):
                         print(error)
                     }
-                    print("данные изменились")
                 }
 
 

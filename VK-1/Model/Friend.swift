@@ -9,23 +9,46 @@ import UIKit
 import SwiftyJSON
 import RealmSwift
 
-class Friend: Object, Codable {
-    @objc dynamic var firstName = ""
-    @objc dynamic var lastName = ""
-    @objc dynamic var photo = ""
-    @objc dynamic var id = 0
+class Friend: Object {
+    
+    
+    @objc dynamic var firstName: String = ""
+    @objc dynamic var lastName: String = ""
+    @objc dynamic var id: Int = 0
+    @objc dynamic var photo: String = ""
 
-    
-    
-     convenience init(_ json: JSON)  {
-        self.init()
-        self.firstName = json["first_name"].stringValue
-        self.lastName = json["last_name"].stringValue
-        self.photo = json["photo"].stringValue
-        self.id = json["id"].intValue
-    }
+
     override static func primaryKey() -> String? {
         return "id"
     }
+    
+    convenience init(_ firstName: String, _ lastName: String, _ id: Int, _ photo: String) {
+        self.init()
+        self.firstName = firstName
+        self.lastName = lastName
+        self.id = id
+        self.photo = photo
+    }
 
 }
+
+class ParseDataOperation: Operation {
+
+    var outputData: [Friend]?
+    
+    override func main() {
+        guard let requestOperation = dependencies.first as? RequestOperation,
+            let data = requestOperation.data else { return }
+        let json = try! JSON(data: data)
+        let friends: [Friend] = json["response"]["items"].compactMap {
+            let id = $0.1["id"].intValue
+            let firstName = $0.1["first_name"].stringValue
+            let lastName = $0.1["last_name"].stringValue
+            let photo = $0.1["photo"].stringValue
+            
+            return Friend(firstName, lastName, id, photo)
+        }
+        self.outputData = friends
+    }
+}
+
