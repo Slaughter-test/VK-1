@@ -18,10 +18,13 @@ class GroupsTableViewController: UITableViewController {
         self.tableView.dataSource = self
         self.searchBar.delegate = self
 
-        networkService.loadGroupList()
         self.tableView.reloadData()
 
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(updateData), for: .valueChanged)
         
+        self.refreshControl = refreshControl
+        updateData()
         setupViews()
     }
     
@@ -36,8 +39,7 @@ class GroupsTableViewController: UITableViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.searchBar.delegate = self
-
-        networkService.loadGroupList()
+        updateData()
         self.tableView.reloadData()
     }
 
@@ -94,6 +96,24 @@ class GroupsTableViewController: UITableViewController {
         self.navigationController?.navigationBar.barTintColor = UIColor(displayP3Red: 179/255, green: 179/255, blue: 225/255, alpha: 0.95)
         self.navigationItem.rightBarButtonItem  = addGroupButton
         self.navigationItem.titleView = searchBar
+    }
+    @objc
+    private func updateData() {
+
+        self.refreshControl?.beginRefreshing()
+        networkService.loadGroupList(on: .global())
+            .get { [weak self] groups in
+                guard self != nil else { return }
+                self?.networkService.saveList(groups)
+            }
+            .done(on: .main) { _ in
+                self.refreshControl?.endRefreshing()
+            }
+             .catch { error in
+                print(error)
+            }.finally {
+                self.tableView.reloadData()
+    }
     }
     
     private func showDeleteGroup(indexPath: IndexPath) {

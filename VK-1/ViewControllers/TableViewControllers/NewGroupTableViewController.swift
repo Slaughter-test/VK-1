@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import RealmSwift
+import PromiseKit
+
 
 class NewGroupTableViewController: UITableViewController {
     let networkService = NetworkService()
@@ -15,22 +18,20 @@ class NewGroupTableViewController: UITableViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        networkService.getGroupsCatalog( completion: { [weak self] groups in
-            self?.groupList = groups
-            self?.tableView.reloadData()
-
-        })
+        
+        let refreshControl = UIRefreshControl()
+        
+        refreshControl.addTarget(self, action: #selector(updateData), for: .valueChanged)
+        
+        updateData()
+        
         setupViews()
 
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        networkService.getGroupsCatalog( completion: { [weak self] groups in
-            self?.groupList = groups
-            self?.tableView.reloadData()
-
-        })
+        updateData()
         self.tableView.reloadData()
     }
 
@@ -57,7 +58,7 @@ class NewGroupTableViewController: UITableViewController {
     }
 
     //MARK: - Data
-    var groupList: Array<Group> = []
+    var groupList = [Group]()
     
     private func setupViews() {
 
@@ -72,29 +73,41 @@ class NewGroupTableViewController: UITableViewController {
 
     }
     
-    func convertGroups(indexPath: IndexPath) {
-        
-        groupList.remove(at: indexPath.row)
-        self.tableView.reloadData()
-        
-    }
     
     private func showAddGroup(indexPath: IndexPath) {
         
         let alert = UIAlertController(title: "Войти в группу", message: "Вы действительно хотите войти в группу \(groupList[indexPath.row].name) ?", preferredStyle: .alert)
         let action = UIAlertAction(title: "Yes", style: .default, handler: { [self] _ in
-                                    self.networkService.joinGroup(id: groupList[indexPath.row].id)
-                                    networkService.ref.child("users").child(Session.instance.userId).child("\(groupList[indexPath.row].id)").setValue(["\(groupList[indexPath.row].id)" : "\(groupList[indexPath.row].name)"])
-                                    self.convertGroups( indexPath: indexPath)})
-        
-        
+            self.networkService.joinGroup(id: groupList[indexPath.row].id )
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+        })
         let action2 = UIAlertAction(title: "No", style: .destructive, handler: {_ in 
             self.tableView.reloadData()
         })
+            
             
         alert.addAction(action)
         alert.addAction(action2)
         
         present(alert, animated: true, completion: nil)
+    }
+    
+    @objc
+    private func updateData() {
+
+        self.refreshControl?.beginRefreshing()
+        networkService.getGroupsCatalog(on: .main)
+            .get { [weak self] groups in
+                guard self != nil else { return }
+                self?.groupList = groups
+            }
+            .done(on: .main) { _ in
+                self.refreshControl?.endRefreshing()
+            }
+             .catch { error in
+                print(error)
+            }.finally {
+                self.tableView.reloadData()
+    }
     }
 }

@@ -5,11 +5,12 @@ target 'VK-1' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  pod 'Alamofire'
+  pod 'Alamofire', '~> 5.2'
   pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
   pod 'Kingfisher' 
   pod 'RealmSwift'
   pod 'PromiseKit'
+  pod 'PromiseKit/Alamofire'
   # add the Firebase pod for Google Analytics
   pod 'Firebase/Analytics'
   pod 'Firebase/Database'

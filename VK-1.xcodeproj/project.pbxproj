@@ -199,8 +199,8 @@
 		7991437425F7D3EB00BCDE5E /* Operations */ = {
 			isa = PBXGroup;
 			children = (
-				7991437525F7D3FF00BCDE5E /* RequestOperation.swift */,
 				7991437825F7D57700BCDE5E /* AsyncOperation.swift */,
+				7991437525F7D3FF00BCDE5E /* RequestOperation.swift */,
 				7991437F25F7DEDE00BCDE5E /* RealmOperations.swift */,
 			);
 			path = Operations;

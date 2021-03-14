@@ -44,7 +44,7 @@ class GroupsTableViewCell: UITableViewCell {
     //MARK: - Data
     var group: Group? {
         didSet {
-            nameLabel.text = (group?.name)!
+            nameLabel.text = (group!.name)
             photo.downloaded(from: group!.photo)
         }
     }
@@ -67,3 +67,4 @@ class GroupsTableViewCell: UITableViewCell {
 
     }
 }
+

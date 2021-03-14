@@ -10,6 +10,7 @@ import Alamofire
 import SwiftyJSON
 import RealmSwift
 import FirebaseDatabase
+import PromiseKit
 
 class NetworkService {
     
@@ -33,6 +34,7 @@ class NetworkService {
     }
     
         func loadSuggestedFriends(completion: @escaping ([Friend]) -> Void) {
+            
         let path = "friends.getSuggestions"
         let url = baseUrl+path
         let parameters: Parameters = [
@@ -44,7 +46,7 @@ class NetworkService {
         ]
 
         
-        AF.request(url, method: .get, parameters: parameters).responseData {
+        Alamofire.request(url, method: .get, parameters: parameters).responseData {
             response in
             switch response.result {
             case .success(let data):
@@ -58,11 +60,13 @@ class NetworkService {
                     return Friend(firstName, lastName, id, photo)
                 }
                 completion(friends)
+                
             case .failure(let error):
                 print(error)
             }
     }
         }
+    
     func addFriend(id: Int) {
         let path = "friends.add"
         let url = baseUrl+path
@@ -72,7 +76,7 @@ class NetworkService {
             "user_id": String(id)
         ]
         
-        AF.request(url, method: .get, parameters: parameters).responseData {
+        Alamofire.request(url, method: .get, parameters: parameters).responseData {
             response in
             switch response.result {
             case .success(let data):
@@ -94,7 +98,7 @@ class NetworkService {
             "user_id": String(id)
         ]
         
-        AF.request(url, method: .get, parameters: parameters).responseData {
+        Alamofire.request(url, method: .get, parameters: parameters).responseData {
             response in
             switch response.result {
             case .success(let data):
@@ -107,7 +111,9 @@ class NetworkService {
         }
         
     }
-    func getGroupsCatalog(completion: @escaping ([Group]) -> Void) {
+    //MARK: - Получение возможных групп для вступления
+    
+    func getGroupsCatalog(on queue: DispatchQueue = .main) -> Promise<[Group]>  {
         let path = "groups.getCatalog"
         let url = baseUrl+path
         let parameters: Parameters = [
@@ -116,26 +122,23 @@ class NetworkService {
             "v": version
         ]
         
-        AF.request(url, method: .get, parameters: parameters).responseData {
-            response in
-            switch response.result {
-            case .success(let data):
-                let json = JSON(data)
+        return Alamofire.request(url, method: .get, parameters: parameters)
+            .responseJSON()
+            .map(on: queue) {
+                json, response -> [Group] in
+                let json = JSON(json)
                 var groups = [Group]()
                 let groupsJSON = json["response"]["items"].arrayValue
                 for group in groupsJSON {
                     if group["is_member"].intValue == 0 {
                     let f = Group(group)
                     groups.append(f)
-                }
-                }
-                completion(groups)
-            case .failure(let error):
-                print(error)
             }
+                }
+                return groups
     }
 
-    }
+        }
     
     func joinGroup(id: Int) {
         let path = "groups.join"
@@ -146,7 +149,7 @@ class NetworkService {
             "group_id": String(-id)
         ]
         
-        AF.request(url, method: .get, parameters: parameters).responseData {
+        Alamofire.request(url, method: .get, parameters: parameters).responseData {
             response in
             switch response.result {
             case .success(let data):
@@ -168,7 +171,7 @@ class NetworkService {
             "group_id": String(-id)
         ]
         
-        AF.request(url, method: .get, parameters: parameters).responseData {
+        Alamofire.request(url, method: .get, parameters: parameters).responseData {
             response in
             switch response.result {
             case .success(let data):
@@ -181,7 +184,7 @@ class NetworkService {
         }
     }
     
-    func loadGroupList() {
+    func loadGroupList(on queue: DispatchQueue = .main) -> Promise<[Group]> {
         let path = "groups.get"
         let url = baseUrl+path
         let parameters: Parameters = [
@@ -191,25 +194,22 @@ class NetworkService {
             "fields": "city, domain, photo",
             "extended": "1"
         ]
-
         
-        AF.request(url, method: .get, parameters: parameters).responseData { [weak self]
-            response in
-            switch response.result {
-            case .success(let data):
-                let json = JSON(data)
+        return Alamofire.request(url, method: .get, parameters: parameters)
+            .responseJSON()
+            .map(on: queue) {
+                json, response -> [Group] in
+                let json = JSON(json)
                 var groups = [Group]()
                 let groupsJSON = json["response"]["items"].arrayValue
                 for group in groupsJSON {
                     let f = Group(group)
                     groups.append(f)
-                }
-                self?.saveList(groups)
-            case .failure(let error):
-                print(error)
             }
+                return groups
     }
-        }
+    }
+    
 
             
     //MARK: - загрузить фото текущего юзера
@@ -233,7 +233,7 @@ class NetworkService {
             "extended": "1"
         ]
         // тут запрашиваем альбомы , чтобы получить айдишники
-        AF.request(urlAlbums, method: .get, parameters: parameters).responseJSON { [weak self] response in
+        Alamofire.request(urlAlbums, method: .get, parameters: parameters).responseJSON { [weak self] response in
             switch response.result {
             case .success(let data):
                 let json = JSON(data)
@@ -247,7 +247,7 @@ class NetworkService {
                 // тут для кажддого айдишника делаем новый запрос на сервер(несколько айдишников нельзя :( )
                     for i in albumsIds {
                         parametersPhoto.updateValue(i, forKey: "album_id")
-                        AF.request(urlPhotos, method: .get, parameters: parametersPhoto).responseJSON { response in
+                        Alamofire.request(urlPhotos, method: .get, parameters: parametersPhoto).responseJSON { response in
                             switch response.result {
                             case .success(let data):
                                 let json = JSON(data)
@@ -282,7 +282,7 @@ class NetworkService {
             "item_id": photoId
         ]
         
-        AF.request(url, method: .get, parameters: parameters).responseJSON {
+        Alamofire.request(url, method: .get, parameters: parameters).responseJSON {
             response in
             switch response.result {
             case .success( _):
@@ -307,7 +307,7 @@ class NetworkService {
             "item_id": photoId
         ]
         
-        AF.request(url, method: .get, parameters: parameters).responseJSON {
+        Alamofire.request(url, method: .get, parameters: parameters).responseJSON {
             response in
             switch response.result {
             case .success( _):
@@ -330,5 +330,4 @@ struct Album {
         self.id = json["id"].intValue
     }
 }
-
 }
