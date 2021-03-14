@@ -32,37 +32,7 @@ class NetworkService {
         }
     }
     
-    //MARK: - Список друзей
-
-    public func loadFriendList() {
-        let path = "friends.get"
-        let url = baseUrl+path
-        let parameters: Parameters = [
-            "user_id": Session.instance.userId,
-            "access_token": Session.instance.token,
-            "v": version,
-            "fields": "city, domain, photo",
-            "order": "name"
-        ]
-        
-        AF.request(url, method: .get, parameters: parameters).responseData { [weak self]
-            response in
-            switch response.result {
-            case .success(let data):
-                let json = JSON(data)
-                let friends = [Friend]()
-                let friendsJSON = json["response"]["items"].arrayValue
-                for _ in friendsJSON {
-//                    let f = Friend(friend)
-//                    friends.append(f)
-                }
-                self?.saveList(friends)
-            case .failure(let error):
-                print(error)
-            }
-    }
-        }
-    func loadSuggestedFriends(completion: @escaping ([Friend]) -> Void) {
+        func loadSuggestedFriends(completion: @escaping ([Friend]) -> Void) {
         let path = "friends.getSuggestions"
         let url = baseUrl+path
         let parameters: Parameters = [
@@ -79,11 +49,13 @@ class NetworkService {
             switch response.result {
             case .success(let data):
                 let json = JSON(data)
-                let friends = [Friend]()
-                let friendsJSON = json["response"]["items"].arrayValue
-                for _ in friendsJSON {
-//                    let f = Friend(friend)
-//                    friends.append(f)
+                let friends: [Friend] = json["response"]["items"].compactMap {
+                    let id = $0.1["id"].intValue
+                    let firstName = $0.1["first_name"].stringValue
+                    let lastName = $0.1["last_name"].stringValue
+                    let photo = $0.1["photo"].stringValue
+                    
+                    return Friend(firstName, lastName, id, photo)
                 }
                 completion(friends)
             case .failure(let error):
@@ -297,38 +269,7 @@ class NetworkService {
             }
     }
 }
-    //MARK: - загрузить список групп текущего юзера
-    func getGroupsList() {
-        let path = "groups.get"
-        let url = baseUrl+path
-        let parameters: Parameters = [
-            "user_id": Session.instance.userId,
-            "access_token": Session.instance.token,
-            "v": version,
-        ]
-        
-        AF.request(url, method: .get, parameters: parameters).responseJSON { response in
-            print(response.value as Any)
-    }
 
-}
-    //MARK: - поиск группы по вводу текста
-    //search - текст поискового запроса
-    
-    func searchGroupsFromList(_ search: String) {
-        let path = "groups.search"
-        let url = baseUrl+path
-        let parameters: Parameters = [
-            "user_id": Session.instance.userId,
-            "access_token": Session.instance.token,
-            "v": version,
-            "q": search
-        ]
-        
-        AF.request(url, method: .get, parameters: parameters).responseJSON { response in
-            print(response.value as Any)
-    }
-    }
     func setLike(_ userId: String, _ photoId: String, completion: @escaping (Bool) -> Void) {
         let path = "likes.add"
         let url = baseUrl+path
