@@ -9,7 +9,6 @@ import UIKit
 
 class FriendsTableViewCell: UITableViewCell {
 
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -45,8 +44,12 @@ class FriendsTableViewCell: UITableViewCell {
     var friend: Friend? {
         didSet {
             nameLabel.text = (friend?.firstName)! + " " + (friend?.lastName)!
-            photo.downloaded(from: friend!.photo)
 
+        }
+    }
+    var imageforPhoto: UIImage? {
+        didSet {
+            photo.image = imageforPhoto
         }
     }
     
@@ -60,11 +63,18 @@ class FriendsTableViewCell: UITableViewCell {
         outerView.layer.cornerRadius = outerView.frame.size.width / 2
         photo.layer.cornerRadius = photo.frame.size.width / 2
         photo.clipsToBounds = true
-        
-    
         addConstraintsWithFormat("H:|-10-[v0(50)]-10-[v1]|", views: outerView, nameLabel)
         addConstraintsWithFormat("V:|-10-[v0]-10-|", views: nameLabel)
         addConstraintsWithFormat("V:|-10-[v0]-10-|", views: outerView)
 
+    }
+    func configure(with friend: Friend, photoService: PhotoService) {
+        nameLabel.text =  "\(friend.firstName)" +  " " + "\(friend.lastName)"
+        let url = friend.photo
+        photoService.getPhoto(urlString: url) { [weak self] image in
+            DispatchQueue.main.async {
+                self?.photo.image = image
+            }
+        }
     }
 }

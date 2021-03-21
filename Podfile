@@ -5,7 +5,7 @@ target 'VK-1' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  pod 'Alamofire', '~> 5.2'
+  pod 'Alamofire', '~> 4.0'
   pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
   pod 'Kingfisher' 
   pod 'RealmSwift'

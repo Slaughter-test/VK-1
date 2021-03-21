@@ -12,6 +12,11 @@ class NewFriendsTableViewController: UITableViewController {
     let networkService = NetworkService()
     private var friendList = [Friend]()
     
+    let photoService: PhotoService = {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.photoService ?? PhotoService()
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,7 +47,7 @@ class NewFriendsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! FriendsTableViewCell
-        cell.friend = friendList[indexPath.row]
+        cell.configure(with: friendList[indexPath.row], photoService: photoService)
         return cell
     }
     
