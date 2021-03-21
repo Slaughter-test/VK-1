@@ -25,7 +25,7 @@ class NewsFeedService {
     ]
         DispatchQueue.main.async {
             
-            AF.request(url, method: .get, parameters: parameters).responseJSON {
+            Alamofire.request(url, method: .get, parameters: parameters).responseJSON {
                 response in
                 switch response.result {
                 case .success(let data):
@@ -86,23 +86,4 @@ class NewsFeedService {
         }
     }
 }
-    func getPhotos() {
-        let path = "newsfeed.get"
-        let url = baseUrl+path
-        let parameters: Parameters = [
-            "user_id": Session.instance.userId,
-            "access_token": Session.instance.token,
-            "v": version,
-            "filter": "photos"
-        ]
-            DispatchQueue.main.async {
-                
-                AF.request(url, method: .get, parameters: parameters).responseJSON { response in
-                    print(response.value as Any)
-                    
-            }
-        }
-    }
-    
-
 }

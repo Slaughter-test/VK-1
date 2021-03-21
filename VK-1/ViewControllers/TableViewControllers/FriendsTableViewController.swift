@@ -111,7 +111,7 @@ class FriendsTableViewController: UITableViewController {
     }
     @objc
     private func updateData() {
-        let request = AF.request(url,
+        let request = Alamofire.request(url,
                                  method: .get,
                                  parameters: parameters)
         
