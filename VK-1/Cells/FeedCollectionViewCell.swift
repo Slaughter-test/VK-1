@@ -133,8 +133,8 @@ class FeedCollectionViewCell: UITableViewCell {
         addConstraintsWithFormat("H:|[v0]|", views: photoImageView)
         addConstraintsWithFormat("H:|[v0]|", views: dividedLineView)
         addConstraintsWithFormat("H:|-8-[v0]-8-[v1(v0)]-8-[v2(v1)]|", views: likeButton, commentButton,shareButton)
-        addConstraintsWithFormat("V:|-453-[v0(44)]-|", views: commentButton)
-        addConstraintsWithFormat("V:|-453-[v0(44)]-|", views: shareButton)
+        shareButton.centerYAnchor.constraint(equalTo: likeButton.centerYAnchor).isActive = true
+        commentButton.centerYAnchor.constraint(equalTo: likeButton.centerYAnchor).isActive = true
 
         
     }
