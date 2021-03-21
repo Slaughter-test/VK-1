@@ -184,7 +184,7 @@ class NetworkService {
         }
     }
     
-    func loadGroupList(on queue: DispatchQueue = .main) -> Promise<[Group]> {
+    func loadGroupList(on queue: DispatchQueue = .global()) -> Promise<[Group]> {
         let path = "groups.get"
         let url = baseUrl+path
         let parameters: Parameters = [

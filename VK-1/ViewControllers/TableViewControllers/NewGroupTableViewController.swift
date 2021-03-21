@@ -96,7 +96,7 @@ class NewGroupTableViewController: UITableViewController {
     private func updateData() {
 
         self.refreshControl?.beginRefreshing()
-        networkService.getGroupsCatalog(on: .main)
+        networkService.getGroupsCatalog(on: .global())
             .get { [weak self] groups in
                 guard self != nil else { return }
                 self?.groupList = groups
