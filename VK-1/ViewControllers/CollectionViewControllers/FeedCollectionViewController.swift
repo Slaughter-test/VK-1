@@ -21,14 +21,11 @@ class FeedCollectionViewController: UITableViewController {
         self.tableView?.backgroundColor = UIColor(white: 0.90, alpha: 1)
         self.tableView?.delaysContentTouches = false
         setupViews()
-        
-        networkService.getPosts { posts in
-            self.posts = posts
-            self.tableView.reloadData()
-        }
+        updateData()
             
         //MARK: - Pull to Refresh
             let refreshControl = UIRefreshControl()
+            refreshControl.attributedTitle = NSAttributedString(string: "Refreshing")
             refreshControl.addTarget(self, action: #selector(updateData), for: .valueChanged)
 
             // this is the replacement of implementing: "collectionView.addSubview(refreshControl)"
@@ -56,7 +53,7 @@ class FeedCollectionViewController: UITableViewController {
         return cell
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 700
+        return 500
     }
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
