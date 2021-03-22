@@ -93,7 +93,7 @@ PODS:
   - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 4.0)
+  - Alamofire
   - Firebase/Analytics
   - Firebase/Database
   - Kingfisher
@@ -151,6 +151,6 @@ SPEC CHECKSUMS:
   RealmSwift: 4f6758c3adbdcc87f7b7777107226532a077f61c
   SwiftyJSON: 1817529ff49abe4d8a49ce8549aeb8a30ad162ee
 
-PODFILE CHECKSUM: f58203f8c5d4adaf9ecf1e40b9621a99e3ffb673
+PODFILE CHECKSUM: 99d304fc49ec0e6df37b8e02e3462288067c0b97
 
 COCOAPODS: 1.10.1
