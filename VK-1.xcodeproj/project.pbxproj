@@ -42,6 +42,7 @@
 		79ACECBE25A0C59A0024F414 /* FriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79ACECBD25A0C59A0024F414 /* FriendsTableViewCell.swift */; };
 		79ACECC125A36B0B0024F414 /* NewFriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79ACECC025A36B0B0024F414 /* NewFriendsTableViewController.swift */; };
 		79ACECCC25A38B510024F414 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79ACECCB25A38B510024F414 /* Loader.swift */; };
+		79B4EB742607EA6100714E63 /* PhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B4EB732607EA6100714E63 /* PhotoService.swift */; };
 		79D6944D25EE94350051C85F /* NewsFeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D6944C25EE94350051C85F /* NewsFeedService.swift */; };
 		79E7109F25B455590059A41D /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E7109E25B455590059A41D /* NetworkService.swift */; };
 		79E710A525B459780059A41D /* VKWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E710A425B459780059A41D /* VKWebViewController.swift */; };
@@ -88,6 +89,7 @@
 		79ACECBD25A0C59A0024F414 /* FriendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewCell.swift; sourceTree = "<group>"; };
 		79ACECC025A36B0B0024F414 /* NewFriendsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFriendsTableViewController.swift; sourceTree = "<group>"; };
 		79ACECCB25A38B510024F414 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
+		79B4EB732607EA6100714E63 /* PhotoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoService.swift; sourceTree = "<group>"; };
 		79D6944C25EE94350051C85F /* NewsFeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedService.swift; sourceTree = "<group>"; };
 		79E7109E25B455590059A41D /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		79E710A425B459780059A41D /* VKWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKWebViewController.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 			children = (
 				79E7109E25B455590059A41D /* NetworkService.swift */,
 				79D6944C25EE94350051C85F /* NewsFeedService.swift */,
+				79B4EB732607EA6100714E63 /* PhotoService.swift */,
 			);
 			path = NetworkService;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 				79304C6525AA35EE00E58CB4 /* FullPhotoCollectionViewCell.swift in Sources */,
 				79304C6825AA3DC400E58CB4 /* Photo.swift in Sources */,
 				791F65C9259E177500ECD136 /* LoginViewController.swift in Sources */,
+				79B4EB742607EA6100714E63 /* PhotoService.swift in Sources */,
 				7991438025F7DEDE00BCDE5E /* RealmOperations.swift in Sources */,
 				79304C6225A9F28800E58CB4 /* PhotoCollectionViewCell.swift in Sources */,
 				7956FF1E25A5C55D008274F4 /* GroupsTableViewController.swift in Sources */,

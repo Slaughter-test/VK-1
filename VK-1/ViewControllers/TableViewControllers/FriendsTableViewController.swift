@@ -14,6 +14,11 @@ class FriendsTableViewController: UITableViewController {
     let networkService = NetworkService()
     let operationQueue = OperationQueue()
     
+    let photoService: PhotoService = {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        return appDelegate?.photoService ?? PhotoService()
+    }()
+    
     var friendList = try? Realm().objects(Friend.self).sorted(byKeyPath: "lastName")
     
     
@@ -67,7 +72,8 @@ class FriendsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! FriendsTableViewCell
         if searching == false {
-            cell.friend = friendList?[indexPath.row] } else { cell.friend = searchedFriends?[indexPath.row] }
+            cell.configure(with: friendList![indexPath.row], photoService: photoService)
+        } else { cell.friend = searchedFriends?[indexPath.row] }
         return cell
     }
     
