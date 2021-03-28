@@ -52,7 +52,9 @@ class FriendsTableViewCell: UITableViewCell {
             photo.image = imageforPhoto
         }
     }
-    
+    let instets: CGFloat = 10.0
+
+
     
     //MARK: - Setup View
     private func setupViews() {
@@ -68,8 +70,24 @@ class FriendsTableViewCell: UITableViewCell {
         addConstraintsWithFormat("V:|-10-[v0]-10-|", views: outerView)
 
     }
+    func getLabelSize(text: String, font: UIFont) -> CGSize {
+            let maxWidth = bounds.width - instets * 2
+            let textBlock = CGSize(width: maxWidth, height: CGFloat.greatestFiniteMagnitude)
+        let rect = text.boundingRect(with: textBlock, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
+            let width = Double(rect.size.width)
+            let height = Double(rect.size.height)
+            let size = CGSize(width: ceil(width), height: ceil(height))
+            return size
+    }
+    func nameLabelFrame() {
+            let nameLabelSize = getLabelSize(text: nameLabel.text!, font: nameLabel.font)
+            let nameLabelX = (bounds.width - nameLabelSize.width) / 2
+            let nameLabelOrigin =  CGPoint(x: nameLabelX, y: instets)
+            nameLabel.frame = CGRect(origin: nameLabelOrigin, size: nameLabelSize)
+    }
     func configure(with friend: Friend, photoService: PhotoService) {
         nameLabel.text =  "\(friend.firstName)" +  " " + "\(friend.lastName)"
+        nameLabelFrame()
         let url = friend.photo
         photoService.getPhoto(urlString: url) { [weak self] image in
             DispatchQueue.main.async {

@@ -58,7 +58,11 @@ class GroupsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! GroupsTableViewCell
         if searching == false {
-            cell.group = groupList?[indexPath.row] } else { cell.group = searchedGroups![indexPath.row] }
+            cell.group = groupList?[indexPath.row]
+            cell.configureCell()
+        } else { cell.group = searchedGroups![indexPath.row]
+            cell.configureCell()
+        }
         return cell
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
