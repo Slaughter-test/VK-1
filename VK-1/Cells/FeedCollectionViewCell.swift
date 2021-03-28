@@ -30,16 +30,21 @@ class FeedCollectionViewCell: UITableViewCell {
             }
             likesCount = post!.likes
             comments = post!.comments
-            time = post!.date
+            time = dateFormatter.string(from: Date(timeIntervalSince1970: post!.date))
             postedText = post!.text
-            
+            width = post!.photoWidth
+            height = post!.photoHeight
+            ratio =  CGFloat(height)/CGFloat(width) }
         }
-    }
+
     var like = true
     var likesCount = 0
     var comments = 0
     var postedText = ""
     var time = ""
+    var ratio: CGFloat = 0
+    var height = 0
+    var width = 0
     
     //MARK: Elements
     private let likedImage = UIImage(systemName: "heart.fill")
@@ -47,9 +52,14 @@ class FeedCollectionViewCell: UITableViewCell {
     private let likedTint = UIColor.red
     private let unlikedTint = UIColor(displayP3Red: 179/255, green: 179/255, blue: 225/255, alpha: 0.95)
     
+    let dateFormatter: DateFormatter = {
+        let dateformatter = DateFormatter()
+        dateformatter.timeStyle = .short
+        return dateformatter
+    }()
+    
     let avatarView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "kitana")
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 22
         imageView.contentMode = .scaleAspectFit
@@ -70,7 +80,6 @@ class FeedCollectionViewCell: UITableViewCell {
     let postText: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
-        label.textAlignment = .natural
         return label
     }()
     
@@ -79,6 +88,7 @@ class FeedCollectionViewCell: UITableViewCell {
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
+
     let dividedLineView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(displayP3Red: 179/255, green: 179/255, blue: 225/255, alpha: 0.95)
@@ -121,6 +131,10 @@ class FeedCollectionViewCell: UITableViewCell {
         contentView.addSubview(commentButton)
         contentView.addSubview(shareButton)
         contentView.addSubview(postText)
+
+        if ratio != 0 {
+        NSLayoutConstraint.activate([photoImageView.heightAnchor.constraint(equalTo: photoImageView.widthAnchor, multiplier: 1/ratio)])
+        }
         addConstraintsWithFormat("H:|-8-[v0]-8-|", views: postText)
         addConstraintsWithFormat("V:|-14-[v0(20)]-4-[v1(14)]-8-[v2]-8-[v3]-4-[v4(2)]-4-[v5(44)]-4-|", views: nameLabel, dateLabel, postText, photoImageView,dividedLineView, likeButton)
         likeButton.setTitle(String(self.likesCount), for: .normal)
@@ -150,12 +164,9 @@ class FeedCollectionViewCell: UITableViewCell {
             likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
         }
         postText.text = postedText
+        postText.textAlignment = .left
+        postText.numberOfLines = 4
         dateLabel.text = time
-        if postText.text == "" {
-            postText.numberOfLines = 0
-        } else {
-            postText.numberOfLines = 4
-        }
         avatarView.downloaded(from: post!.avatar)
         nameLabel.text = post!.name
         if post?.photos != [] {
@@ -179,8 +190,7 @@ class FeedCollectionViewCell: UITableViewCell {
            toggleLike()
            animate()
        }
-       
-       
+    
        private func animate() {
            UIView.animate(withDuration: 0.1, animations: {
                let newImage = self.like ? self.likedImage : self.unlikedImage
@@ -195,4 +205,6 @@ class FeedCollectionViewCell: UITableViewCell {
                })
            })
        }
+
 }
+
