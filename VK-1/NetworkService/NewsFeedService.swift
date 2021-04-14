@@ -51,8 +51,6 @@ class NewsFeedService {
                         var name = ""
                         var photos = [String]()
                         var avatar = ""
-                        var height = 0
-                        var width = 0
                         let postAttachments = post["attachments"].arrayValue
                         let id = post["source_id"].intValue
                         if post["copy_history"].exists() {
@@ -73,10 +71,6 @@ class NewsFeedService {
                                 photos.append(photourl)
                             }
                         }
-                            width = postAttachments[0]["photo"]["width"].intValue
-                            height = postAttachments[0]["photo"]["height"].intValue
-                            print(width)
-                            print(height)
                         if id < 0 {
                             for group in groups {
                                 if group["id"].intValue == -id {
@@ -92,7 +86,7 @@ class NewsFeedService {
                                 }
                             }
                         }
-                        let f = Post(post, photos, avatar: avatar, name: name, width: width, height: height)
+                        let f = Post(post, photos, avatar: avatar, name: name)
                         posts.append(f)
                         }
                     }

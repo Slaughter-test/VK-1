@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Foundation
 import Kingfisher
 
 extension UIImageView {
@@ -17,4 +18,19 @@ extension UIImageView {
         guard let url = URL(string: link) else { return }
         downloaded(from: url, contentMode: mode)
     }
+}
+extension UIColor {
+    
+    static let brandPurple = UIColor(displayP3Red: 179/255, green: 179/255, blue: 225/255, alpha: 0.95)
+    
+    static let brandGrey = UIColor(white: 0.90, alpha: 1)
+    
+    static let brandBlack = UIColor(red: 155/255, green: 161/255, blue: 171/255, alpha: 1)
+}
+
+extension UIFont {
+    
+    static let brandBoldFont = UIFont.boldSystemFont(ofSize: 16)
+    
+    static let brandStandartFont = UIFont.systemFont(ofSize: 14)
 }

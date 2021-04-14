@@ -22,7 +22,7 @@ class GroupsTableViewCell: UITableViewCell {
     //MARK: - Elements
     var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = .brandBoldFont
         return label
         
     }()

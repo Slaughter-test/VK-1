@@ -21,7 +21,7 @@ class FriendsTableViewCell: UITableViewCell {
     //MARK: - Elements
     var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = .brandBoldFont
         return label
         
     }()
@@ -85,10 +85,10 @@ class FriendsTableViewCell: UITableViewCell {
             let nameLabelOrigin =  CGPoint(x: nameLabelX, y: instets)
             nameLabel.frame = CGRect(origin: nameLabelOrigin, size: nameLabelSize)
     }
-    func configure(with friend: Friend, photoService: PhotoService) {
-        nameLabel.text =  "\(friend.firstName)" +  " " + "\(friend.lastName)"
+    func configure(with viewModel: FriendViewModel, photoService: PhotoService) {
+        nameLabel.text =  viewModel.friendText
         nameLabelFrame()
-        let url = friend.photo
+        let url = viewModel.avatar
         photoService.getPhoto(urlString: url) { [weak self] image in
             DispatchQueue.main.async {
                 self?.photo.image = image

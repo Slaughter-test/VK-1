@@ -52,7 +52,7 @@ class PhotoViewController: UICollectionViewController, UICollectionViewDelegateF
     private func setupViews() {
         
         collectionView.backgroundColor = .black
-        navigationController?.navigationBar.barTintColor = UIColor(displayP3Red: 179/255, green: 179/255, blue: 225/255, alpha: 0.95)
+        navigationController?.navigationBar.barTintColor = .brandPurple
         collectionView.isPagingEnabled = true
 
     }

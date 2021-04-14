@@ -19,11 +19,8 @@ class Post: Codable {
     var photos: Array<String>
     var avatar: String
     var name: String
-    var photoHeight: Int
-    var photoWidth: Int
-    var aspectRatio: CGFloat { return CGFloat(photoHeight)/CGFloat(photoWidth) }
         
-    init(_ json: JSON, _ photos: Array<String>, avatar: String, name: String, width: Int, height: Int) {
+    init(_ json: JSON, _ photos: Array<String>, avatar: String, name: String) {
         self.date = json["date"].doubleValue
         self.text = json["text"].stringValue
         self.likes = json["likes"]["count"].intValue
@@ -33,8 +30,6 @@ class Post: Codable {
         self.photos = photos
         self.avatar = avatar
         self.name = name
-        self.photoHeight = height
-        self.photoWidth = width
     }
 }
 

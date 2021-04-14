@@ -55,7 +55,7 @@ class FullPhotoCollectionViewCell: UICollectionViewCell{
     let likeButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.titleLabel?.font = .brandStandartFont
         return button
     }()
     
@@ -122,9 +122,9 @@ class FullPhotoCollectionViewCell: UICollectionViewCell{
             likeButton.setTitleColor(.systemRed, for: .normal)
 
         } else {
-            likeButton.tintColor = UIColor(displayP3Red: 179/255, green: 179/255, blue: 225/255, alpha: 0.95)
+            likeButton.tintColor = .brandPurple
             likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
-            likeButton.setTitleColor(UIColor(displayP3Red: 179/255, green: 179/255, blue: 225/255, alpha: 0.95), for: .normal)
+            likeButton.setTitleColor(.brandPurple , for: .normal)
         }
         likeButton.setTitle(String(self.likesCount!), for: .normal)
     }
