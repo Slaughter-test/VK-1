@@ -22,7 +22,6 @@ final class FriendsNetworkAdapter {
         "fields": "city, domain, photo",
         "order": "name"
     ]
-    private var realmNotificationTokens: [String: NotificationToken] = [:]
 
     func getFriends(then completion: @escaping ([Friend]) -> Void) {
         let request = Alamofire.request(url,
