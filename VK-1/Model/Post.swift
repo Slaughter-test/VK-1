@@ -15,13 +15,13 @@ class Post: Codable {
     var text: String
     var comments: Int
     var views: Int
-    var date: String
+    var date: Double
     var photos: Array<String>
     var avatar: String
     var name: String
         
     init(_ json: JSON, _ photos: Array<String>, avatar: String, name: String) {
-        self.date = Date(timeIntervalSince1970: TimeInterval((json["date"].intValue))).asString(style: .long)
+        self.date = json["date"].doubleValue
         self.text = json["text"].stringValue
         self.likes = json["likes"]["count"].intValue
         self.userLikes = json["likes"]["user_likes"].intValue

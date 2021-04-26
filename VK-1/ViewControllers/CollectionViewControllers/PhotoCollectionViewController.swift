@@ -60,8 +60,8 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
     }
     
     private func setupViews() {
-        self.navigationController?.navigationBar.barTintColor = UIColor(displayP3Red: 179/255, green: 179/255, blue: 225/255, alpha: 0.95)
-        self.collectionView?.backgroundColor = UIColor(white: 0.90, alpha: 1)
+        self.navigationController?.navigationBar.barTintColor = .brandPurple
+        self.collectionView?.backgroundColor = .brandGrey
 
     }
 

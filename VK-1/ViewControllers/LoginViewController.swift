@@ -4,7 +4,7 @@
 //
 //  Created by Юрий Егоров on 31.12.2020.
 //
-
+// this class is useless
 import UIKit
 
 class LoginViewController: UIViewController {

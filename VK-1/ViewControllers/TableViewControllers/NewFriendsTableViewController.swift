@@ -11,6 +11,8 @@ class NewFriendsTableViewController: UITableViewController {
     
     let networkService = NetworkService()
     private var friendList = [Friend]()
+    private let viewModelFactory = FriendsViewModelFactory()
+    private var viewModels: [FriendViewModel] = []
     
     let photoService: PhotoService = {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -23,9 +25,10 @@ class NewFriendsTableViewController: UITableViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        networkService.loadSuggestedFriends { [weak self] friends in
-            self?.friendList = friends
-            self?.tableView.reloadData()
+        networkService.loadSuggestedFriends { [self] friends in
+            self.friendList = friends
+            self.viewModels = self.viewModelFactory.constructViewModels(from: friendList)
+            self.tableView.reloadData()
 
         }
         
@@ -38,7 +41,7 @@ class NewFriendsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return friendList.count
+        return viewModels.count
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -47,7 +50,7 @@ class NewFriendsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! FriendsTableViewCell
-        cell.configure(with: friendList[indexPath.row], photoService: photoService)
+        cell.configure(with: viewModels[indexPath.row], photoService: photoService)
         return cell
     }
     
@@ -60,7 +63,7 @@ class NewFriendsTableViewController: UITableViewController {
         self.tableView.separatorStyle = .none
         self.tableView.tableFooterView = UIView()
         self.navigationController?.navigationBar.topItem?.title = "Friends"
-        self.navigationController?.navigationBar.barTintColor = UIColor(displayP3Red: 179/255, green: 179/255, blue: 225/255, alpha: 0.95)
+        self.navigationController?.navigationBar.barTintColor = .brandPurple
 
     }
     

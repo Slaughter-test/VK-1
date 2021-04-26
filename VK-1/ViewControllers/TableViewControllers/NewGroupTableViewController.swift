@@ -67,10 +67,7 @@ class NewGroupTableViewController: UITableViewController {
         self.tableView.separatorStyle = .none
         self.tableView.tableFooterView = UIView()
         self.navigationController?.navigationBar.topItem?.title = "Groups"
-        self.navigationController?.navigationBar.barTintColor = UIColor(displayP3Red: 179/255,
-                                                                        green: 179/255,
-                                                                        blue: 225/255,
-                                                                        alpha: 0.95)
+        self.navigationController?.navigationBar.barTintColor = .brandPurple
 
     }
     

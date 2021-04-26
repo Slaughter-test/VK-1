@@ -11,27 +11,20 @@ import Alamofire
 
 class FriendsTableViewController: UITableViewController {
     
-    let networkService = NetworkService()
-    let operationQueue = OperationQueue()
+    private let friendsService = FriendsNetworkAdapter()
+    private let networkService = NetworkService()
+    private let viewModelFactory = FriendsViewModelFactory()
+    private var viewModels: [FriendViewModel] = []
     
     let photoService: PhotoService = {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         return appDelegate?.photoService ?? PhotoService()
     }()
     
-    var friendList = try? Realm().objects(Friend.self).sorted(byKeyPath: "lastName")
+    var friendList: [Friend] = []
+    var searching = false
+    var searchedFriends: [Friend] = []
     
-    
-    let url = "https://api.vk.com/method/friends.get"
-    let parameters: Parameters = [
-        "user_id": Session.instance.userId,
-        "access_token": Session.instance.token,
-        "v": "5.68",
-        "fields": "city, domain, photo",
-        "order": "name"
-    ]
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.delegate = self
@@ -52,7 +45,6 @@ class FriendsTableViewController: UITableViewController {
     
     override  func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
-        self.token?.invalidate()
         
     }
 
@@ -60,8 +52,8 @@ class FriendsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searching == false {
-            return friendList?.count ?? 0} else {
-                return searchedFriends?.count ?? 0
+            return viewModels.count } else {
+                return searchedFriends.count
             }
     }
     
@@ -72,16 +64,16 @@ class FriendsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! FriendsTableViewCell
         if searching == false {
-            cell.configure(with: friendList![indexPath.row], photoService: photoService)
-        } else { cell.friend = searchedFriends?[indexPath.row] }
+            cell.configure(with: viewModels[indexPath.row], photoService: photoService)
+        } else { cell.friend = searchedFriends[indexPath.row] }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(identifier: "PhotoCollectionViewController1") as! PhotoCollectionViewController
         if searching == false {
-            vc.id = friendList?[indexPath.row].id ?? 0} else {
-                vc.id = searchedFriends?[indexPath.row].id ?? 0
+            vc.id = friendList[indexPath.row].id } else {
+                vc.id = searchedFriends[indexPath.row].id
             }
         self.navigationController?.pushViewController(vc, animated: true)
         
@@ -91,15 +83,6 @@ class FriendsTableViewController: UITableViewController {
                 showDeleteFriend(indexPath: indexPath)
             }
         }
-
-    
-    
-    
-    
-    // MARK: - variables
-    var searching = false
-    var searchedFriends: Results<Friend>?
-    var token: NotificationToken?
     
     //MARK: - Elements
     let searchBar = UISearchBar()
@@ -111,41 +94,26 @@ class FriendsTableViewController: UITableViewController {
         self.tableView.separatorStyle = .none
         self.tableView.tableFooterView = UIView()
         self.navigationController?.navigationBar.topItem?.title = "Friends"
-        self.navigationController?.navigationBar.barTintColor = UIColor(displayP3Red: 179/255, green: 179/255, blue: 225/255, alpha: 0.95)
+        self.navigationController?.navigationBar.barTintColor = .brandPurple
         self.navigationItem.rightBarButtonItem  = addFriendButton
         self.navigationItem.titleView = searchBar
     }
     @objc
     private func updateData() {
-        let request = Alamofire.request(url,
-                                 method: .get,
-                                 parameters: parameters)
-        
-        let rp = RequestOperation(request: request)
-        let parseOp = ParseDataOperation()
-        parseOp.addDependency(rp)
-        let realmOp = RealmOperations()
-        realmOp.addDependency(parseOp)
-        operationQueue.addOperations([rp, parseOp, realmOp], waitUntilFinished: false)
-        friendList = try? Realm().objects(Friend.self).sorted(byKeyPath: "lastName")
+        friendsService.getFriends { [self] friends in
+            self.friendList = friends
+            self.viewModels = self.viewModelFactory.constructViewModels(from: friendList)
+        }
         if refreshControl?.isRefreshing == true {
             self.refreshControl?.endRefreshing()
         }
     }
     
     private func showDeleteFriend(indexPath: IndexPath) {
-        let friend = friendList![indexPath.row]
-        let alert = UIAlertController(title: "Удалить из друзей?", message: "Вы действительно хотите удалить \(friendList![indexPath.row].firstName)" +  " " + "\(friendList![indexPath.row].lastName)" + " " + "из друзей?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Удалить из друзей?", message: "Вы действительно хотите удалить \(friendList[indexPath.row].firstName)" +  " " + "\(friendList[indexPath.row].lastName)" + " " + "из друзей?", preferredStyle: .alert)
         let action = UIAlertAction(title: "Yes", style: .default, handler: { [self] _ in
-            self.networkService.deleteFriend(id: friendList![indexPath.row].id)
-            do {
-                let realm = try Realm()
-                realm.beginWrite()
-                realm.delete(friend)
-                try realm.commitWrite()
-            } catch {
-                print(error)
-            }
+            friendsService.deleteFriend(friend: friendList[indexPath.row])
+            friendList.remove(at: indexPath.row)
             self.tableView.reloadData()
         })
         let action2 = UIAlertAction(title: "No", style: .destructive, handler: {_ in
@@ -161,37 +129,20 @@ class FriendsTableViewController: UITableViewController {
         performSegue(withIdentifier: "addFriend", sender: self)
     }
     
-    func realmObserver() {
-        self.token = friendList?.observe {  (changes: RealmCollectionChange) in
-                    switch changes {
-                    case .initial( _):
-                        self.tableView.reloadData()
-                    case .update(_, let deletions, let insertions, let modifications):
-                        self.tableView.beginUpdates()
-                        self.tableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: 0) }),
-                                                         with: .automatic)
-                        self.tableView.deleteRows(at: deletions.map({ IndexPath(row: $0, section: 0)}),
-                                                         with: .automatic)
-                        self.tableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: 0) }),
-                                                         with: .automatic)
-                        self.tableView.endUpdates()
-                    case .error(let error):
-                        print(error)
-                    }
-                    print("данные изменились")
-                }
-
-
-    }
-    
-    
 }
 
 extension FriendsTableViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.tableView.reloadData()
+        var search: [Friend] = []
         if searchText != "" {
-            searchedFriends = friendList!.filter("lastName contains '\(searchText)'")
+            for friends in friendList {
+                if friends.lastName.contains(searchText) {
+                    search.append(friends)
+                }
+            }
+            searchedFriends = search
+
         } else { searchedFriends = friendList }
         searching = true
         self.tableView.reloadData()
