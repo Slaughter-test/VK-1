@@ -12,7 +12,21 @@ import RealmSwift
 import FirebaseDatabase
 import PromiseKit
 
-class NetworkService {
+protocol NetworkServiceInterface {
+    func loadSuggestedFriends(completion: @escaping ([Friend]) -> Void)
+    func addFriend(id: Int)
+    func deleteFriend(id: Int)
+    func getGroupsCatalog(on queue: DispatchQueue) -> Promise<[Group]>
+    func joinGroup(id: Int)
+    func deleteGroup(id: Int)
+    func loadGroupList(on queue: DispatchQueue) -> Promise<[Group]>
+    func loadPhotosList(_ id: Int, completion: @escaping ([Photo]) -> Void)
+    func setLike(_ userId: String, _ photoId: String, completion: @escaping (Bool) -> Void)
+    func removeLike(_ userId: String, _ photoId: String, completion: @escaping (Bool) -> Void)
+    
+}
+
+class NetworkService: NetworkServiceInterface {
     
     //MARK: - Firebase
     var ref = Database.database().reference()
@@ -330,4 +344,63 @@ struct Album {
         self.id = json["id"].intValue
     }
 }
+}
+class NetworkServiceProxy: NetworkServiceInterface {
+    
+    let networkService: NetworkService
+    init(networkService: NetworkService) {
+        self.networkService = networkService
+    }
+    
+    func loadSuggestedFriends(completion: @escaping ([Friend]) -> Void) {
+        self.networkService.loadSuggestedFriends(completion: completion)
+        print("called func loadSuggestedFriends")
+    }
+    
+    func addFriend(id: Int) {
+        self.networkService.addFriend(id: id)
+        print("called func addFriend with \(id)")
+    }
+    
+    func deleteFriend(id: Int) {
+        self.networkService.deleteFriend(id: id)
+        print("called func deleteFriend with \(id)")
+    }
+    
+    func getGroupsCatalog(on queue: DispatchQueue) -> Promise<[Group]> {
+        print("called func getGroupCatalog")
+        return self.networkService.getGroupsCatalog(on: queue)
+    }
+    
+    func joinGroup(id: Int) {
+        self.networkService.joinGroup(id: id)
+        print("called func joinGroup with \(id)")
+
+    }
+    
+    func deleteGroup(id: Int) {
+        self.networkService.joinGroup(id: id)
+        print("called func joinGroup with \(id)")
+    }
+    
+    func loadGroupList(on queue: DispatchQueue) -> Promise<[Group]> {
+        print("called func loadGroupList")
+        return self.networkService.loadGroupList(on: queue)
+    }
+    
+    func loadPhotosList(_ id: Int, completion: @escaping ([Photo]) -> Void) {
+        self.networkService.loadPhotosList(id, completion: completion)
+        print("called func loadPhotosList with id \(id)")
+    }
+    
+    func setLike(_ userId: String, _ photoId: String, completion: @escaping (Bool) -> Void) {
+        self.networkService.setLike(userId, photoId, completion: completion)
+        print("called func setLike on photo with \(photoId) of user \(userId)")
+    }
+    
+    func removeLike(_ userId: String, _ photoId: String, completion: @escaping (Bool) -> Void) {
+        self.networkService.setLike(userId, photoId, completion: completion)
+        print("called func removeLike on photo with \(photoId) of user \(userId)")
+    }
+    
 }

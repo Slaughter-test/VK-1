@@ -11,7 +11,7 @@ private let reuseIdentifier = "Cell"
 
 class PhotoCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    let networkService = NetworkService()
+    let networkService = NetworkServiceProxy(networkService: NetworkService())
     var id: Int = 0
     var photos = Array<Photo>()
 
